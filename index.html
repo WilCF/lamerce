@@ -146,6 +146,11 @@
     color:#fff;
     border-bottom-color:var(--terra);
   }
+  nav a.nav-playlist{
+    border-bottom-color:var(--teal);
+    background:#e4efec;
+  }
+  nav a.nav-playlist:hover{background:#fff;border-color:var(--teal);border-bottom-color:var(--teal);}
 
   /* ---- Header ---- */
   header{padding:56px 0 36px;border-bottom:3px solid var(--ink);}
@@ -205,6 +210,44 @@
   }
   .status.confirmed{background:#1f6b64;color:#fff;}
   .status.tbd{background:#e3d7c0;color:#6b5c4a;}
+
+  /* ---- Music hero CTA ---- */
+  .music-hero{
+    display:block;text-decoration:none;color:#fff;
+    background:linear-gradient(135deg,var(--teal),#0e3f3a);
+    border-radius:16px;margin:20px 0 28px;overflow:hidden;
+    box-shadow:0 6px 20px rgba(31,107,100,.25);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .music-hero:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(31,107,100,.35);}
+  .music-hero-top{padding:24px 26px 18px;}
+  .music-hero-kicker{
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    color:#a9e8de;margin-bottom:8px;
+  }
+  .music-hero-title{
+    font-family:'Fraunces',serif;font-weight:600;color:#fff;
+    font-size:clamp(1.3rem,3vw,1.7rem);margin:0 0 8px;
+  }
+  .music-hero-sub{font-size:14.5px;color:#dff2ee;margin:0;max-width:560px;}
+  .music-hero-marquee{
+    overflow:hidden;border-top:1px solid rgba(255,255,255,.18);
+    padding:12px 0;background:rgba(0,0,0,.12);
+  }
+  .music-hero-track{
+    display:flex;gap:28px;white-space:nowrap;width:max-content;
+    animation:musicScroll 32s linear infinite;
+    font-size:13.5px;font-weight:600;color:#cdeee7;padding-left:26px;
+  }
+  .music-hero-track span::before{content:"♪ ";opacity:.7;}
+  .music-hero:hover .music-hero-track{animation-play-state:paused;}
+  @keyframes musicScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .music-hero-track{animation:none;}
+  }
 
   /* ---- Schedule table ---- */
   .sched-item{
@@ -438,13 +481,13 @@
     <div class="nav-links">
       <a href="#about"><span data-lang="en">About La Mercè</span><span data-lang="ca">Sobre La Mercè</span><span data-lang="es">Sobre La Mercè</span></a>
       <a href="#schedule"><span data-lang="en">2026 Schedule</span><span data-lang="ca">Programa 2026</span><span data-lang="es">Programa 2026</span></a>
+      <a href="https://wilcf.github.io/lamerce/playlist.html" class="nav-playlist" target="_blank" rel="noopener noreferrer">🎵 <span data-lang="en">Festival Playlist</span><span data-lang="ca">Llista de Reproducció</span><span data-lang="es">Lista de Reproducción</span></a>
       <a href="#itinerary"><span data-lang="en">Itinerary</span><span data-lang="ca">Itinerari</span><span data-lang="es">Itinerario</span></a>
       <a href="#neighborhoods"><span data-lang="en">Neighborhoods</span><span data-lang="ca">Barris</span><span data-lang="es">Barrios</span></a>
       <a href="#restaurants"><span data-lang="en">Restaurants</span><span data-lang="ca">Restaurants</span><span data-lang="es">Restaurantes</span></a>
       <a href="#practical"><span data-lang="en">Practical Guide</span><span data-lang="ca">Guia Pràctica</span><span data-lang="es">Guía Práctica</span></a>
       <a href="#who"><span data-lang="en">Who's Coming</span><span data-lang="ca">Qui Vindrà</span><span data-lang="es">Quién Viene</span></a>
       <a href="#catalonia"><span data-lang="en">Catalonia Context</span><span data-lang="ca">Context de Catalunya</span><span data-lang="es">Contexto de Cataluña</span></a>
-      <a href="https://wilcf.github.io/lamerce/playlist.html" target="_blank" rel="noopener noreferrer">🎵 <span data-lang="en">Festival Playlist</span><span data-lang="ca">Llista de Reproducció</span><span data-lang="es">Lista de Reproducción</span></a>
     </div>
   </div>
 </nav>
@@ -506,6 +549,20 @@
     <span data-lang="ca">El programa detallat complet (rutes exactes, horaris d'escenaris, ubicacions de cada activitat) encara no s'ha publicat a dia d'avui — l'Ajuntament de Barcelona sol publicar el programa complet a principis o mitjans de setembre, a prop del festival mateix. A continuació tens tot el que <strong>ja</strong> està confirmat, clarament separat del que encara està pendent. Aquesta pàgina es revisarà diàriament i s'actualitzarà tan bon punt es publiqui el programa complet.</span>
     <span data-lang="es">El programa detallado completo (rutas exactas, horarios de escenarios, ubicaciones de cada actividad) todavía no se ha publicado a día de hoy — el Ayuntamiento de Barcelona suele publicar el programa completo a principios o mediados de septiembre, cerca del festival mismo. A continuación tienes todo lo que <strong>ya</strong> está confirmado, claramente separado de lo que aún está pendiente. Esta página se revisará a diario y se actualizará en cuanto se publique el programa completo.</span>
   </p>
+
+  <a class="music-hero" href="https://wilcf.github.io/lamerce/playlist.html" target="_blank" rel="noopener noreferrer">
+    <div class="music-hero-top">
+      <div class="music-hero-kicker">🎵 <span data-lang="en">109 free concerts · Sept 23–27</span><span data-lang="ca">109 concerts gratuïts · 23–27 de setembre</span><span data-lang="es">109 conciertos gratis · 23–27 de septiembre</span></div>
+      <h3 class="music-hero-title"><span data-lang="en">Explore the Full Festival Playlist →</span><span data-lang="ca">Explora la Llista de Reproducció Completa →</span><span data-lang="es">Explora la Lista de Reproducción Completa →</span></h3>
+      <p class="music-hero-sub"><span data-lang="en">100 artists, three songs each — filter by genre and listen on Spotify or Apple Music before you go.</span><span data-lang="ca">100 artistes, tres cançons cadascun — filtra per gènere i escolta a Spotify o Apple Music abans d'anar-hi.</span><span data-lang="es">100 artistas, tres canciones cada uno — filtra por género y escucha en Spotify o Apple Music antes de ir.</span></p>
+    </div>
+    <div class="music-hero-marquee">
+      <div class="music-hero-track">
+        <span>Miki Núñez</span><span>La Pegatina</span><span>Els Amics de les Arts</span><span>Nacho Vegas</span><span>Maika Makovski</span><span>Svetlana</span><span>Buhos</span><span>María Terremoto</span><span>Els Catarres</span><span>Sandra Monfort</span><span>Sexenni</span><span>Aina Machuca</span><span>Carola Ortiz</span><span>Imarhan</span>
+        <span>Miki Núñez</span><span>La Pegatina</span><span>Els Amics de les Arts</span><span>Nacho Vegas</span><span>Maika Makovski</span><span>Svetlana</span><span>Buhos</span><span>María Terremoto</span><span>Els Catarres</span><span>Sandra Monfort</span><span>Sexenni</span><span>Aina Machuca</span><span>Carola Ortiz</span><span>Imarhan</span>
+      </div>
+    </div>
+  </a>
 
   <div class="sched-item">
     <div class="when"><span data-lang="en">All 5 days, various times</span><span data-lang="ca">Els 5 dies, diverses hores</span><span data-lang="es">Los 5 días, varias horas</span></div>
@@ -895,8 +952,6 @@
   </ul>
 </section>
 
-</div>
-
 <section id="catalonia">
   <div class="eyebrow"><span data-lang="en">Context, Not Politics</span><span data-lang="ca">Context, No Política</span><span data-lang="es">Contexto, No Política</span></div>
   <h2><span data-lang="en">Catalonia &amp; the Independence Question</span><span data-lang="ca">Catalunya i la Qüestió de la Independència</span><span data-lang="es">Cataluña y la Cuestión de la Independencia</span></h2>
@@ -954,6 +1009,8 @@
   </p>
   <p style="font-size:12px;color:#a3927a;">Sources: BBC News, "Catalonia's bid for independence explained"; The Economist explainer on the 2017 referendum; Reuters, June 2025 on the amnesty law; Politico EU &amp; Euronews, July 2026 on the CJEU ruling; Catalan News, March 2025 CEO independence-support poll. The academic source suggested for this section (academic.oup.com/book/43069) is fully paywalled and its contents could not be accessed — nothing here is drawn from it.</p>
 </section>
+
+</div>
 
 <footer>
   <span data-lang="en">Built for the Barcelona 2026 / La Mercè trip. Festival-schedule facts confirmed above (Piromusical relocation, Correfoc date, castellers date) were checked against dated 2026 news sources and verified with a deterministic quote-matching tool before being written here — nothing here is presented as confirmed unless it was actually found in a clearly-2026, clearly-dated source. Items marked TBD genuinely have not been announced yet; this page is being watched daily and will be updated once Barcelona City Council publishes the full 2026 program. Restaurant details cross-checked against Eater, The Infatuation, and Condé Nast Traveler coverage as of August 2026 — always worth reconfirming a reservation directly before you go.</span>

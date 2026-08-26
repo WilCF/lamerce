@@ -346,7 +346,7 @@
 <body class="lang-en">
 
 <div class="lang-switch" id="langSwitch">
-    <button class="lang-btn active" data-lang="en">
+    <button class="lang-btn active" data-set-lang="en">
       <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
         <rect width="60" height="36" fill="#00247d"/>
         <g stroke="#fff" stroke-width="7"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
@@ -358,7 +358,7 @@
       </svg>
       <span class="lang-label">EN</span>
     </button>
-    <button class="lang-btn" data-lang="ca">
+    <button class="lang-btn" data-set-lang="ca">
       <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
         <rect width="60" height="36" fill="#FCDD09"/>
         <g fill="#DA121A">
@@ -372,7 +372,7 @@
       </svg>
       <span class="lang-label">CA</span>
     </button>
-    <button class="lang-btn" data-lang="es">
+    <button class="lang-btn" data-set-lang="es">
       <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
         <rect width="60" height="9" y="0" fill="#AA151B"/>
         <rect width="60" height="18" y="9" fill="#F1BF00"/>
@@ -957,13 +957,13 @@ function setLanguage(lang){
   document.body.className = 'lang-' + lang;
   document.documentElement.lang = lang;
   document.querySelectorAll('.lang-btn').forEach(function(b){
-    b.classList.toggle('active', b.dataset.lang === lang);
+    b.classList.toggle('active', b.dataset.setLang === lang);
   });
 }
 document.getElementById('langSwitch').addEventListener('click', function(e){
   var btn = e.target.closest('.lang-btn');
   if(!btn) return;
-  setLanguage(btn.dataset.lang);
+  setLanguage(btn.dataset.setLang);
 });
 setLanguage('en');
 

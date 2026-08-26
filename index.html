@@ -30,18 +30,16 @@
   .wrap{max-width:920px;margin:0 auto;padding:0 6%;}
   a{color:var(--terra-dark);}
 
-  /* ---- Lang switcher ---- */
+  /* ---- Lang switcher (lives inside the sticky nav, pinned right) ---- */
   .lang-switch{
-    position:fixed;
-    top:20px;
-    right:6%;
     display:flex;
-    gap:6px;
+    gap:4px;
     background:#fff;
     border:1.5px solid var(--ink);
     border-radius:999px;
     padding:4px;
-    z-index:30;
+    flex-shrink:0;
+    margin-left:auto;
   }
   .lang-btn{
     border:none;
@@ -49,7 +47,7 @@
     font-family:'Space Grotesk',sans-serif;
     font-size:12.5px;
     font-weight:600;
-    padding:6px 12px;
+    padding:6px 10px;
     border-radius:999px;
     cursor:pointer;
     color:var(--ink);
@@ -57,6 +55,7 @@
     display:inline-flex;
     align-items:center;
     gap:6px;
+    min-height:32px;
   }
   .flag-icon{
     width:18px;
@@ -70,8 +69,9 @@
     background:var(--ink);
     color:#fff;
   }
-  @media (max-width:640px){
-    .lang-switch{position:static;justify-content:flex-end;margin:12px 6% 0;}
+  @media (max-width:480px){
+    .lang-btn .lang-label{display:none;}
+    .lang-btn{padding:7px;}
   }
 
   /* ---- data-lang visibility ---- */
@@ -101,12 +101,16 @@
     background:rgba(250,245,236,.96);
     backdrop-filter:blur(6px);
     border-bottom:1.5px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;gap:10px;padding:10px 6%;}
+  .nav-links{
+    display:flex;gap:4px;
     overflow-x:auto;
     white-space:nowrap;
     scrollbar-width:none;
+    min-width:0;
   }
-  nav::-webkit-scrollbar{display:none;}
-  nav .wrap{display:flex;gap:4px;padding:12px 6%;}
+  .nav-links::-webkit-scrollbar{display:none;}
   nav a{
     text-decoration:none;
     color:var(--ink);
@@ -316,43 +320,6 @@
 </head>
 <body class="lang-en">
 
-<div class="lang-switch" id="langSwitch">
-  <button class="lang-btn active" data-lang="en">
-    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
-      <rect width="60" height="36" fill="#00247d"/>
-      <g stroke="#fff" stroke-width="7"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
-      <g stroke="#cf142b" stroke-width="2.4"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
-      <rect x="24" width="12" height="36" fill="#fff"/>
-      <rect y="12" width="60" height="12" fill="#fff"/>
-      <rect x="27" width="6" height="36" fill="#cf142b"/>
-      <rect y="15" width="60" height="6" fill="#cf142b"/>
-    </svg>
-    EN
-  </button>
-  <button class="lang-btn" data-lang="ca">
-    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
-      <rect width="60" height="36" fill="#FCDD09"/>
-      <g fill="#DA121A">
-        <rect y="4" width="60" height="4"/>
-        <rect y="12" width="60" height="4"/>
-        <rect y="20" width="60" height="4"/>
-        <rect y="28" width="60" height="4"/>
-      </g>
-      <polygon points="0,0 26,18 0,36" fill="#0057B7"/>
-      <text x="8" y="23" font-size="13" fill="#fff" font-family="sans-serif">★</text>
-    </svg>
-    CA
-  </button>
-  <button class="lang-btn" data-lang="es">
-    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
-      <rect width="60" height="9" y="0" fill="#AA151B"/>
-      <rect width="60" height="18" y="9" fill="#F1BF00"/>
-      <rect width="60" height="9" y="27" fill="#AA151B"/>
-    </svg>
-    ES
-  </button>
-</div>
-
 <div class="hb-banner">
   <details class="hb-outer">
     <summary class="hb-teaser">
@@ -406,14 +373,52 @@
 
 <nav>
   <div class="wrap">
-    <a href="#about"><span data-lang="en">About La Mercè</span><span data-lang="ca">Sobre La Mercè</span><span data-lang="es">Sobre La Mercè</span></a>
-    <a href="#schedule"><span data-lang="en">2026 Schedule</span><span data-lang="ca">Programa 2026</span><span data-lang="es">Programa 2026</span></a>
-    <a href="#neighborhoods"><span data-lang="en">Neighborhoods</span><span data-lang="ca">Barris</span><span data-lang="es">Barrios</span></a>
-    <a href="#itinerary"><span data-lang="en">Itinerary</span><span data-lang="ca">Itinerari</span><span data-lang="es">Itinerario</span></a>
-    <a href="#restaurants"><span data-lang="en">Restaurants</span><span data-lang="ca">Restaurants</span><span data-lang="es">Restaurantes</span></a>
-    <a href="#practical"><span data-lang="en">Practical Guide</span><span data-lang="ca">Guia Pràctica</span><span data-lang="es">Guía Práctica</span></a>
-    <a href="#who"><span data-lang="en">Who's Coming</span><span data-lang="ca">Qui Vindrà</span><span data-lang="es">Quién Viene</span></a>
-    <a href="#catalonia"><span data-lang="en">Catalonia Context</span><span data-lang="ca">Context de Catalunya</span><span data-lang="es">Contexto de Cataluña</span></a>
+    <div class="nav-links">
+      <a href="#about"><span data-lang="en">About La Mercè</span><span data-lang="ca">Sobre La Mercè</span><span data-lang="es">Sobre La Mercè</span></a>
+      <a href="#schedule"><span data-lang="en">2026 Schedule</span><span data-lang="ca">Programa 2026</span><span data-lang="es">Programa 2026</span></a>
+      <a href="#neighborhoods"><span data-lang="en">Neighborhoods</span><span data-lang="ca">Barris</span><span data-lang="es">Barrios</span></a>
+      <a href="#itinerary"><span data-lang="en">Itinerary</span><span data-lang="ca">Itinerari</span><span data-lang="es">Itinerario</span></a>
+      <a href="#restaurants"><span data-lang="en">Restaurants</span><span data-lang="ca">Restaurants</span><span data-lang="es">Restaurantes</span></a>
+      <a href="#practical"><span data-lang="en">Practical Guide</span><span data-lang="ca">Guia Pràctica</span><span data-lang="es">Guía Práctica</span></a>
+      <a href="#who"><span data-lang="en">Who's Coming</span><span data-lang="ca">Qui Vindrà</span><span data-lang="es">Quién Viene</span></a>
+      <a href="#catalonia"><span data-lang="en">Catalonia Context</span><span data-lang="ca">Context de Catalunya</span><span data-lang="es">Contexto de Cataluña</span></a>
+    </div>
+    <div class="lang-switch" id="langSwitch">
+      <button class="lang-btn active" data-lang="en">
+        <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+          <rect width="60" height="36" fill="#00247d"/>
+          <g stroke="#fff" stroke-width="7"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
+          <g stroke="#cf142b" stroke-width="2.4"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
+          <rect x="24" width="12" height="36" fill="#fff"/>
+          <rect y="12" width="60" height="12" fill="#fff"/>
+          <rect x="27" width="6" height="36" fill="#cf142b"/>
+          <rect y="15" width="60" height="6" fill="#cf142b"/>
+        </svg>
+        <span class="lang-label">EN</span>
+      </button>
+      <button class="lang-btn" data-lang="ca">
+        <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+          <rect width="60" height="36" fill="#FCDD09"/>
+          <g fill="#DA121A">
+            <rect y="4" width="60" height="4"/>
+            <rect y="12" width="60" height="4"/>
+            <rect y="20" width="60" height="4"/>
+            <rect y="28" width="60" height="4"/>
+          </g>
+          <polygon points="0,0 26,18 0,36" fill="#0057B7"/>
+          <text x="8" y="23" font-size="13" fill="#fff" font-family="sans-serif">★</text>
+        </svg>
+        <span class="lang-label">CA</span>
+      </button>
+      <button class="lang-btn" data-lang="es">
+        <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+          <rect width="60" height="9" y="0" fill="#AA151B"/>
+          <rect width="60" height="18" y="9" fill="#F1BF00"/>
+          <rect width="60" height="9" y="27" fill="#AA151B"/>
+        </svg>
+        <span class="lang-label">ES</span>
+      </button>
+    </div>
   </div>
 </nav>
 

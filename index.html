@@ -994,7 +994,9 @@ setLanguage('en');
 
 /* Scroll-spy: highlight the current section's nav link */
 (function(){
-  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a')).filter(function(a){
+    return a.getAttribute('href').indexOf('#') === 0;
+  });
   var sections = navLinks.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
   if(!sections.length) return;
   function setActive(id){

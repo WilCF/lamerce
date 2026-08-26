@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barcelona 2026 — La Mercè Trip Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b1410;
+    --paper:#faf5ec;
+    --paper2:#f2e9d8;
+    --terra:#c1461e;
+    --terra-dark:#9c3416;
+    --gold:#d9a441;
+    --teal:#1f6b64;
+    --line:#e3d7c0;
+    --blue:#2b5b8a;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    line-height:1.6;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 6%;}
+  a{color:var(--terra-dark);}
+
+  /* ---- Lang switcher ---- */
+  .lang-switch{
+    position:fixed;
+    top:20px;
+    right:6%;
+    display:flex;
+    gap:6px;
+    background:#fff;
+    border:1.5px solid var(--ink);
+    border-radius:999px;
+    padding:4px;
+    z-index:30;
+  }
+  .lang-btn{
+    border:none;
+    background:transparent;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    padding:6px 12px;
+    border-radius:999px;
+    cursor:pointer;
+    color:var(--ink);
+    letter-spacing:.03em;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .flag-icon{
+    width:18px;
+    height:13px;
+    border-radius:2px;
+    display:block;
+    flex-shrink:0;
+    box-shadow:0 0 0 1px rgba(0,0,0,.12);
+  }
+  .lang-btn.active{
+    background:var(--ink);
+    color:#fff;
+  }
+  @media (max-width:640px){
+    .lang-switch{position:static;justify-content:flex-end;margin:12px 6% 0;}
+  }
+
+  /* ---- data-lang visibility ---- */
+  [data-lang]{display:none;}
+  body.lang-en [data-lang="en"]{display:inherit;}
+  body.lang-ca [data-lang="ca"]{display:inherit;}
+  body.lang-es [data-lang="es"]{display:inherit;}
+  body.lang-en span[data-lang="en"],
+  body.lang-ca span[data-lang="ca"],
+  body.lang-es span[data-lang="es"]{display:inline;}
+  body.lang-en div[data-lang="en"],
+  body.lang-ca div[data-lang="ca"],
+  body.lang-es div[data-lang="es"]{display:block;}
+  body.lang-en li[data-lang="en"],
+  body.lang-ca li[data-lang="ca"],
+  body.lang-es li[data-lang="es"]{display:list-item;}
+  body.lang-en p[data-lang="en"],
+  body.lang-ca p[data-lang="ca"],
+  body.lang-es p[data-lang="es"]{display:block;}
+  body.lang-en a[data-lang="en"],
+  body.lang-ca a[data-lang="ca"],
+  body.lang-es a[data-lang="es"]{display:inline;}
+
+  /* ---- Nav ---- */
+  nav{
+    position:sticky;top:0;z-index:10;
+    background:rgba(250,245,236,.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1.5px solid var(--line);
+    overflow-x:auto;
+    white-space:nowrap;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav .wrap{display:flex;gap:4px;padding:12px 6%;}
+  nav a{
+    text-decoration:none;
+    color:var(--ink);
+    font-size:12.5px;
+    font-weight:600;
+    padding:8px 13px;
+    border-radius:999px;
+    flex-shrink:0;
+  }
+  nav a:hover{background:var(--paper2);}
+
+  /* ---- Header ---- */
+  header{padding:56px 0 36px;border-bottom:3px solid var(--ink);}
+  .kicker{
+    font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--terra);font-weight:700;margin-bottom:14px;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(2.2rem,5.5vw,3.6rem);line-height:1.04;
+    margin:0 0 14px;letter-spacing:-.01em;
+  }
+  h1 em{font-style:italic;color:var(--terra);}
+  .sub{font-size:16.5px;max-width:600px;color:#3a2f26;}
+  .header-facts{
+    display:flex;flex-wrap:wrap;gap:22px;margin-top:22px;
+    font-size:13.5px;color:#6b5c4a;
+  }
+  .header-facts strong{color:var(--ink);display:block;font-size:15px;}
+
+  /* ---- Sections ---- */
+  section{padding:52px 0;border-bottom:1.5px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal);font-weight:700;margin-bottom:10px;
+  }
+  h2{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(1.6rem,3.5vw,2.3rem);margin:0 0 18px;
+  }
+  h3{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:1.2rem;margin:26px 0 8px;
+  }
+  p{margin:0 0 14px;}
+  .lede{font-size:16.5px;max-width:680px;color:#2b2118;}
+
+  /* ---- Cards / grids ---- */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  @media (max-width:700px){.grid2,.grid3{grid-template-columns:1fr;}}
+  .card{
+    background:#fff;border:1.5px solid var(--line);border-radius:14px;
+    padding:20px 22px;
+  }
+  .card h4{
+    font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin:0 0 6px;
+  }
+  .card p{font-size:14px;margin:0;color:#3a2f26;}
+
+  /* ---- Status badges ---- */
+  .status{
+    display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;
+    text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-left:8px;
+    vertical-align:middle;
+  }
+  .status.confirmed{background:#1f6b64;color:#fff;}
+  .status.tbd{background:#e3d7c0;color:#6b5c4a;}
+
+  /* ---- Schedule table ---- */
+  .sched-item{
+    border-left:3px solid var(--teal);padding:6px 0 6px 16px;margin-bottom:18px;
+  }
+  .sched-item.tbd{border-left-color:var(--line);}
+  .sched-item .when{font-weight:700;font-size:14px;}
+  .sched-item .what{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;margin:2px 0 6px;}
+  .sched-item .detail{font-size:14px;color:#3a2f26;}
+  .sched-item .src{font-size:11.5px;color:#9a8a75;margin-top:4px;}
+  .sched-item .src a{color:#9a8a75;}
+  .src-label{font-size:11.5px;color:#9a8a75;font-weight:600;display:block;margin-top:4px;}
+
+  /* ---- Itinerary ---- */
+  .day{margin-bottom:30px;}
+  .day-head{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:10px;
+  }
+  .day-head .dow{
+    font-family:'Fraunces',serif;font-weight:600;font-size:1.4rem;
+  }
+  .day-head .date{font-size:13px;color:#8a7a63;}
+  .day ul{margin:0 0 0 0;padding-left:20px;}
+  .day li{margin-bottom:6px;font-size:14.5px;}
+  .day .resv{
+    background:var(--paper2);border-radius:10px;padding:12px 16px;margin-top:8px;font-size:14px;
+  }
+  .day .resv b{display:block;font-family:'Fraunces',serif;font-size:1.02rem;font-weight:600;margin-bottom:2px;}
+
+  /* ---- Restaurant list ---- */
+  .rest-list{list-style:none;margin:0;padding:0;}
+  .rest-list li{
+    padding:14px 0;border-bottom:1px solid var(--line);
+  }
+  .rest-list li:last-child{border-bottom:none;}
+  .rest-list .name{font-family:'Fraunces',serif;font-weight:600;font-size:1.08rem;}
+  .rest-list .meta{font-size:12.5px;color:#8a7a63;margin:2px 0 6px;}
+  .rest-list .desc{font-size:14px;color:#3a2f26;}
+  .price{color:var(--gold);font-weight:700;letter-spacing:1px;}
+
+  /* ---- Neighborhood cards ---- */
+  .neigh{margin-bottom:22px;}
+  .neigh h4{
+    font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;margin:0 0 6px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .neigh .pin{
+    display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--terra);flex-shrink:0;
+  }
+  .neigh p{font-size:14.5px;margin:0;color:#3a2f26;}
+
+  /* ---- Flags note ---- */
+  .flag-note{
+    display:flex;gap:16px;background:#fff;border:1.5px solid var(--line);
+    border-radius:12px;padding:16px 18px;margin:16px 0;font-size:14px;
+  }
+  .flag-note .fbox{text-align:center;flex-shrink:0;}
+  .flag-note svg{width:44px;height:28px;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.1);display:block;margin-bottom:4px;}
+  .flag-note .fbox span{font-size:10.5px;color:#8a7a63;}
+
+  /* ---- Practical tips ---- */
+  .tip{
+    display:flex;gap:14px;margin-bottom:16px;
+  }
+  .tip .icon{
+    flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--paper2);
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+  }
+  .tip .body h4{margin:0 0 4px;font-family:'Fraunces',serif;font-size:1rem;}
+  .tip .body p{margin:0;font-size:14px;color:#3a2f26;}
+
+  /* ---- Roster ---- */
+  .roster{list-style:none;margin:0;padding:0;columns:2;column-gap:28px;}
+  @media (max-width:640px){.roster{columns:1;}}
+  .roster li{
+    font-size:14px;margin-bottom:10px;break-inside:avoid;
+  }
+  .roster b{display:block;font-size:14.5px;}
+  .roster span{color:#8a7a63;font-size:12.5px;}
+
+  .note{
+    font-size:13px;color:#8a7a63;background:var(--paper2);border-radius:10px;padding:12px 16px;margin-top:10px;
+  }
+
+  footer{
+    max-width:920px;margin:0 auto;padding:36px 6% 60px;
+    font-size:12px;color:#a3927a;line-height:1.7;
+  }
+
+  /* ---- Hyperagent banner ---- */
+  .hb-banner{max-width:920px;margin:0 auto;padding:18px 6% 0;}
+  .hb-outer summary.hb-teaser{
+    cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;
+    background:linear-gradient(135deg,var(--terra) 0%,var(--terra-dark) 100%);
+    color:#fff;padding:15px 22px;border-radius:999px;font-weight:600;font-size:14.5px;
+    box-shadow:0 4px 16px rgba(193,70,30,.28);transition:transform .15s ease;
+  }
+  .hb-outer summary.hb-teaser:hover{transform:translateY(-1px);}
+  .hb-outer summary.hb-teaser::-webkit-details-marker{display:none;}
+  .hb-teaser-icon{font-size:17px;flex-shrink:0;}
+  .hb-teaser-text{flex:1;}
+  .hb-teaser-chevron{font-size:19px;flex-shrink:0;transition:transform .2s ease;opacity:.85;}
+  .hb-outer[open] .hb-teaser-chevron{transform:rotate(90deg);}
+  .hb-outer[open] summary.hb-teaser{border-radius:16px 16px 0 0;}
+  .hb-card{
+    background:linear-gradient(135deg,var(--teal) 0%,#164f4a 100%);
+    border-radius:0 0 16px 16px;padding:22px 26px;color:#fff;
+  }
+  .hb-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .hb-badge{
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.14);
+    padding:6px 12px;border-radius:999px;margin-bottom:10px;
+  }
+  .hb-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block;}
+  .hb-headline{
+    font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.2rem,2.4vw,1.6rem);
+    line-height:1.25;max-width:560px;margin:0;
+  }
+  .hb-cta{
+    display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);
+    text-decoration:none;font-weight:700;font-size:14.5px;padding:13px 22px;border-radius:999px;
+    white-space:nowrap;flex-shrink:0;transition:transform .15s ease;
+  }
+  .hb-cta:hover{transform:translateY(-1px);}
+  .hb-accordion{margin-top:16px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px;}
+  .hb-accordion summary{
+    cursor:pointer;list-style:none;font-size:13.5px;font-weight:600;display:flex;
+    align-items:center;gap:8px;color:#fff;opacity:.92;
+  }
+  .hb-accordion summary::-webkit-details-marker{display:none;}
+  .hb-accordion summary::before{content:'▸';font-size:11px;transition:transform .15s ease;display:inline-block;}
+  .hb-accordion[open] summary::before{transform:rotate(90deg);}
+  .hb-steps{margin:14px 0 2px;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .hb-steps li{background:rgba(255,255,255,.09);border-radius:10px;padding:10px 14px;font-size:13px;line-height:1.5;color:#eef7f5;}
+  .hb-steps .step-num{font-weight:700;color:var(--gold);margin-right:6px;}
+</style>
+</head>
+<body class="lang-en">
+
+<div class="lang-switch" id="langSwitch">
+  <button class="lang-btn active" data-lang="en">
+    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="36" fill="#00247d"/>
+      <g stroke="#fff" stroke-width="7"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
+      <g stroke="#cf142b" stroke-width="2.4"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
+      <rect x="24" width="12" height="36" fill="#fff"/>
+      <rect y="12" width="60" height="12" fill="#fff"/>
+      <rect x="27" width="6" height="36" fill="#cf142b"/>
+      <rect y="15" width="60" height="6" fill="#cf142b"/>
+    </svg>
+    EN
+  </button>
+  <button class="lang-btn" data-lang="ca">
+    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="36" fill="#FCDD09"/>
+      <g fill="#DA121A">
+        <rect y="4" width="60" height="4"/>
+        <rect y="12" width="60" height="4"/>
+        <rect y="20" width="60" height="4"/>
+        <rect y="28" width="60" height="4"/>
+      </g>
+      <polygon points="0,0 26,18 0,36" fill="#0057B7"/>
+      <text x="8" y="23" font-size="13" fill="#fff" font-family="sans-serif">★</text>
+    </svg>
+    CA
+  </button>
+  <button class="lang-btn" data-lang="es">
+    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="9" y="0" fill="#AA151B"/>
+      <rect width="60" height="18" y="9" fill="#F1BF00"/>
+      <rect width="60" height="9" y="27" fill="#AA151B"/>
+    </svg>
+    ES
+  </button>
+</div>
+
+<div class="hb-banner">
+  <details class="hb-outer">
+    <summary class="hb-teaser">
+      <span class="hb-teaser-icon">⚡</span>
+      <span class="hb-teaser-text">
+        <span data-lang="en">Built with Hyperagent — grab $100 in free AI credits and build something like this yourself</span><span data-lang="ca">Fet amb Hyperagent — aconsegueix 100 $ en crèdits d'IA gratuïts i crea alguna cosa així tu mateix</span><span data-lang="es">Hecho con Hyperagent — consigue 100 $ en créditos de IA gratis y crea algo así tú mismo</span>
+      </span>
+      <span class="hb-teaser-chevron">›</span>
+    </summary>
+    <div class="hb-card">
+      <div class="hb-top">
+        <div>
+          <div class="hb-badge"><span class="dot"></span><span><span data-lang="en">Built with Hyperagent</span><span data-lang="ca">Fet amb Hyperagent</span><span data-lang="es">Hecho con Hyperagent</span></span></div>
+          <p class="hb-headline"><span data-lang="en">Get $100 in free AI credits — this whole page came together from a handful of prompts.</span><span data-lang="ca">Aconsegueix 100 $ en crèdits d'IA gratuïts — tota aquesta pàgina es va crear amb un grapat de prompts.</span><span data-lang="es">Consigue 100 $ en créditos de IA gratis — toda esta página se creó con un puñado de prompts.</span></p>
+        </div>
+        <a class="hb-cta" href="https://hyperagent.com/refer/2Z2NZU74" target="_blank" rel="noopener noreferrer"><span data-lang="en">Claim your credits →</span><span data-lang="ca">Reclama els teus crèdits →</span><span data-lang="es">Reclama tus créditos →</span></a>
+      </div>
+      <details class="hb-accordion">
+        <summary><span data-lang="en">See the actual prompts that built this page</span><span data-lang="ca">Mira els prompts reals que han creat aquesta pàgina</span><span data-lang="es">Mira los prompts reales que crearon esta página</span></summary>
+        <ol class="hb-steps">
+          <li><span class="step-num">1.</span>
+            <span data-lang="en">Turn a trip document into a webpage with everything folks need to know for a Barcelona festival trip — itinerary, restaurant bookings, and a link to the fuller trip plan.</span>
+            <span data-lang="ca">Converteix un document de viatge en una pàgina web amb tot el que la gent necessita saber per a un viatge al festival de Barcelona — itinerari, reserves de restaurants, i un enllaç al pla de viatge complet.</span>
+            <span data-lang="es">Convierte un documento de viaje en una página web con todo lo que la gente necesita saber para un viaje al festival de Barcelona — itinerario, reservas de restaurantes, y un enlace al plan de viaje completo.</span>
+          </li>
+          <li><span class="step-num">2.</span>
+            <span data-lang="en">Research the festival's history, what's confirmed vs. not yet announced for this year's schedule, the city's neighborhoods, and some cultural/political context — verify everything carefully rather than guessing.</span>
+            <span data-lang="ca">Investiga la història del festival, què està confirmat i què encara no s'ha anunciat per al programa d'aquest any, els barris de la ciutat, i una mica de context cultural/polític — verifica-ho tot amb cura en lloc d'endevinar.</span>
+            <span data-lang="es">Investiga la historia del festival, qué está confirmado y qué aún no se ha anunciado para el programa de este año, los barrios de la ciudad, y algo de contexto cultural/político — verifícalo todo con cuidado en lugar de adivinar.</span>
+          </li>
+          <li><span class="step-num">3.</span>
+            <span data-lang="en">Add a restaurants section referencing a well-known food-press guide for additional options.</span>
+            <span data-lang="ca">Afegeix una secció de restaurants que faci referència a una guia coneguda de la premsa gastronòmica per a més opcions.</span>
+            <span data-lang="es">Añade una sección de restaurantes que haga referencia a una guía conocida de la prensa gastronómica para más opciones.</span>
+          </li>
+          <li><span class="step-num">4.</span>
+            <span data-lang="en">Set up a daily automated check for when the full festival schedule gets published, and have it update the page.</span>
+            <span data-lang="ca">Configura una comprovació automàtica diària de quan es publiqui el programa complet del festival, i que actualitzi la pàgina.</span>
+            <span data-lang="es">Configura una comprobación automática diaria de cuándo se publique el programa completo del festival, y que actualice la página.</span>
+          </li>
+          <li><span class="step-num">5.</span>
+            <span data-lang="en">Add a banner crediting the tool used to build this, with a referral link and the prompts that made it.</span>
+            <span data-lang="ca">Afegeix un bàner que doni crèdit a l'eina usada per crear-ho, amb un enllaç de referència i els prompts que ho van fer.</span>
+            <span data-lang="es">Añade un banner que dé crédito a la herramienta usada para crear esto, con un enlace de referencia y los prompts que lo hicieron.</span>
+          </li>
+        </ol>
+      </details>
+    </div>
+  </details>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a href="#about"><span data-lang="en">About La Mercè</span><span data-lang="ca">Sobre La Mercè</span><span data-lang="es">Sobre La Mercè</span></a>
+    <a href="#schedule"><span data-lang="en">2026 Schedule</span><span data-lang="ca">Programa 2026</span><span data-lang="es">Programa 2026</span></a>
+    <a href="#neighborhoods"><span data-lang="en">Neighborhoods</span><span data-lang="ca">Barris</span><span data-lang="es">Barrios</span></a>
+    <a href="#itinerary"><span data-lang="en">Itinerary</span><span data-lang="ca">Itinerari</span><span data-lang="es">Itinerario</span></a>
+    <a href="#restaurants"><span data-lang="en">Restaurants</span><span data-lang="ca">Restaurants</span><span data-lang="es">Restaurantes</span></a>
+    <a href="#practical"><span data-lang="en">Practical Guide</span><span data-lang="ca">Guia Pràctica</span><span data-lang="es">Guía Práctica</span></a>
+    <a href="#who"><span data-lang="en">Who's Coming</span><span data-lang="ca">Qui Vindrà</span><span data-lang="es">Quién Viene</span></a>
+    <a href="#catalonia"><span data-lang="en">Catalonia Context</span><span data-lang="ca">Context de Catalunya</span><span data-lang="es">Contexto de Cataluña</span></a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="kicker"><span data-lang="en">A Trip Guide</span><span data-lang="ca">Una Guia de Viatge</span><span data-lang="es">Una Guía de Viaje</span></div>
+  <h1><span data-lang="en">Barcelona <em>2026</em></span><span data-lang="ca">Barcelona <em>2026</em></span><span data-lang="es">Barcelona <em>2026</em></span></h1>
+  <p class="sub">
+    <span data-lang="en">Everything you need for La Mercè week — Wednesday Sept 23 through Monday Sept 28, 2026. This celebration week is open to anyone joining the trip, locally, or from out of town. This website was created to inform everyone about Wil &amp; LeeAnn's schedule so they can meet up at the activities, concerts, dinners, or happy hours that work best for them. They are staying in Eixample at the Hotel Claris. Schedule will be updated as the dates get closer. Check back here or message the WhatsApp group for clarity.</span>
+    <span data-lang="ca">Tot el que necessites per a la setmana de La Mercè — de dimecres 23 a dilluns 28 de setembre de 2026. Aquesta setmana de celebració està oberta a qualsevol que s'uneixi al viatge, tant si és d'aquí com de fora. Aquesta pàgina web es va crear per informar tothom sobre l'horari de Wil i LeeAnn perquè puguin trobar-se a les activitats, concerts, sopars o happy hours que millor els vagin. S'allotgen a l'Eixample, a l'Hotel Claris. El programa s'anirà actualitzant a mesura que s'apropin les dates. Torna a mirar aquí o escriu al grup de WhatsApp si tens dubtes.</span>
+    <span data-lang="es">Todo lo que necesitas para la semana de La Mercè — de miércoles 23 a lunes 28 de septiembre de 2026. Esta semana de celebración está abierta a cualquiera que se una al viaje, ya sea de aquí o de fuera. Esta página web se creó para informar a todos sobre el horario de Wil y LeeAnn para que puedan encontrarse en las actividades, conciertos, cenas o happy hours que mejor les vengan. Se alojan en el Eixample, en el Hotel Claris. El programa se irá actualizando a medida que se acerquen las fechas. Vuelve a consultar aquí o escribe al grupo de WhatsApp si tienes dudas.</span>
+  </p>
+  <div class="header-facts">
+    <div><strong>Wed Sept 23 – Mon Sept 28</strong><span data-lang="en">Trip dates</span><span data-lang="ca">Dates del viatge</span><span data-lang="es">Fechas del viaje</span></div>
+    <div><strong>La Mercè 2026</strong><span data-lang="en">Barcelona's citywide festival</span><span data-lang="ca">El festival de tota la ciutat de Barcelona</span><span data-lang="es">El festival de toda la ciudad de Barcelona</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section id="about">
+  <div class="eyebrow"><span data-lang="en">The Festival</span><span data-lang="ca">El Festival</span><span data-lang="es">El Festival</span></div>
+  <h2><span data-lang="en">What is La Mercè?</span><span data-lang="ca">Què és La Mercè?</span><span data-lang="es">¿Qué es La Mercè?</span></h2>
+  <p class="lede">
+    <span data-lang="en">La Mercè is Barcelona's biggest annual festival — a free, citywide celebration of the city's patron saint (Our Lady of Mercy) that takes over squares, streets, and beaches for several days every September. Nearly everything is free and open to the public, run by the city government.</span>
+    <span data-lang="ca">La Mercè és el festival anual més gran de Barcelona — una celebració gratuïta i de tota la ciutat en honor de la patrona de la ciutat (la Mare de Déu de la Mercè) que s'apodera de places, carrers i platges durant diversos dies cada setembre. Gairebé tot és gratuït i obert al públic, organitzat per l'ajuntament.</span>
+    <span data-lang="es">La Mercè es el festival anual más grande de Barcelona — una celebración gratuita y de toda la ciudad en honor a la patrona de la ciudad (la Virgen de la Merced) que se apodera de plazas, calles y playas durante varios días cada septiembre. Casi todo es gratuito y abierto al público, organizado por el ayuntamiento.</span>
+  </p>
+  <div class="grid2">
+    <div class="card">
+      <h4><span data-lang="en">2026 theme</span><span data-lang="ca">Tema del 2026</span><span data-lang="es">Tema de 2026</span></h4>
+      <p>
+        <span data-lang="en">Barcelona is celebrating multiple perspectives on the city — the official poster maps recognizable sites like the Cathedral and Plaça del Rei from different angles. This year's Guest City is <strong>Shanghai</strong>, marking the 25th anniversary of the Barcelona–Shanghai sister-city partnership: over 100 artists from Shanghai and Barcelona's Chinese community will bring street arts, music, and tradition into the festival. <span style="color:#8a7a63;font-size:12px;">(Source: barcelona.cat/lamerce, official 2026 overview)</span></span>
+        <span data-lang="ca">Barcelona celebra múltiples perspectives de la ciutat — el cartell oficial mostra llocs reconeixibles com la Catedral i la Plaça del Rei des de diferents angles. La Ciutat Convidada d'enguany és <strong>Xangai</strong>, amb motiu del 25è aniversari de l'agermanament entre Barcelona i Xangai: més de 100 artistes de Xangai i de la comunitat xinesa de Barcelona portaran arts de carrer, música i tradició al festival. <span style="color:#8a7a63;font-size:12px;">(Font: barcelona.cat/lamerce, resum oficial 2026)</span></span>
+        <span data-lang="es">Barcelona celebra múltiples perspectivas de la ciudad — el cartel oficial muestra lugares reconocibles como la Catedral y la Plaça del Rei desde diferentes ángulos. La Ciudad Invitada de este año es <strong>Shanghái</strong>, con motivo del 25º aniversario del hermanamiento entre Barcelona y Shanghái: más de 100 artistas de Shanghái y de la comunidad china de Barcelona traerán artes callejeras, música y tradición al festival. <span style="color:#8a7a63;font-size:12px;">(Fuente: barcelona.cat/lamerce, resumen oficial 2026)</span></span>
+      </p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="en">What you'll actually see</span><span data-lang="ca">Què veuràs realment</span><span data-lang="es">Qué verás en realidad</span></h4>
+      <p>
+        <span data-lang="en">Human towers (<em>castellers</em>), giant costumed figures (<em>gegants</em>) parading through the old town, a fire-run with devils and dragons (<em>correfoc</em>), free concerts across multiple outdoor stages, open-house access to major museums, and a massive closing fireworks-and-music show (<em>Piromusical</em>).</span>
+        <span data-lang="ca">Torres humanes (<em>castellers</em>), figures gegants disfressades (<em>gegants</em>) desfilant pel casc antic, una correguda de foc amb diables i dracs (<em>correfoc</em>), concerts gratuïts en diversos escenaris a l'aire lliure, accés obert als principals museus, i un gran espectacle de cloenda de focs artificials i música (<em>Piromusical</em>).</span>
+        <span data-lang="es">Torres humanas (<em>castellers</em>), figuras gigantes disfrazadas (<em>gegants</em>) desfilando por el casco antiguo, una corredera de fuego con diablos y dragones (<em>correfoc</em>), conciertos gratuitos en varios escenarios al aire libre, acceso abierto a los principales museos, y un gran espectáculo de cierre de fuegos artificiales y música (<em>Piromusical</em>).</span>
+      </p>
+    </div>
+  </div>
+  <p style="margin-top:18px;font-size:14px;color:#8a7a63;">
+    <span data-lang="en">La Mercè 2026 is expanding for the first time into all ten Barcelona districts, with new stages including Plaça de les Glòries. A poster exhibition spanning every La Mercè poster since 1979 will also run, plus a Parc Güell tribute marking the centenary of Antoni Gaudí's death.</span>
+    <span data-lang="ca">La Mercè 2026 s'estén per primera vegada als deu districtes de Barcelona, amb nous escenaris com la Plaça de les Glòries. També hi haurà una exposició de cartells que repassa tots els cartells de La Mercè des de 1979, a més d'un homenatge al Parc Güell pel centenari de la mort d'Antoni Gaudí.</span>
+    <span data-lang="es">La Mercè 2026 se extiende por primera vez a los diez distritos de Barcelona, con nuevos escenarios como la Plaça de les Glòries. También habrá una exposición de carteles que repasa todos los carteles de La Mercè desde 1979, además de un homenaje al Parc Güell por el centenario de la muerte de Antoni Gaudí.</span>
+  </p>
+</section>
+
+<section id="schedule">
+  <div class="eyebrow"><span data-lang="en">Confirmed vs. Not Yet Announced</span><span data-lang="ca">Confirmat vs. Encara No Anunciat</span><span data-lang="es">Confirmado vs. Aún No Anunciado</span></div>
+  <h2><span data-lang="en">La Mercè 2026 Schedule</span><span data-lang="ca">Programa de La Mercè 2026</span><span data-lang="es">Programa de La Mercè 2026</span></h2>
+  <p class="lede">
+    <span data-lang="en">The full detailed program (exact routes, stage times, locations for every single activity) has genuinely not been released yet as of today — Barcelona City Council typically drops the complete program in early-to-mid September, close to the festival itself. Below is everything that <strong>is</strong> confirmed already, clearly separated from what's still pending. This page will be checked daily and updated the moment the full program drops.</span>
+    <span data-lang="ca">El programa detallat complet (rutes exactes, horaris d'escenaris, ubicacions de cada activitat) encara no s'ha publicat a dia d'avui — l'Ajuntament de Barcelona sol publicar el programa complet a principis o mitjans de setembre, a prop del festival mateix. A continuació tens tot el que <strong>ja</strong> està confirmat, clarament separat del que encara està pendent. Aquesta pàgina es revisarà diàriament i s'actualitzarà tan bon punt es publiqui el programa complet.</span>
+    <span data-lang="es">El programa detallado completo (rutas exactas, horarios de escenarios, ubicaciones de cada actividad) todavía no se ha publicado a día de hoy — el Ayuntamiento de Barcelona suele publicar el programa completo a principios o mediados de septiembre, cerca del festival mismo. A continuación tienes todo lo que <strong>ya</strong> está confirmado, claramente separado de lo que aún está pendiente. Esta página se revisará a diario y se actualizará en cuanto se publique el programa completo.</span>
+  </p>
+
+  <div class="sched-item">
+    <div class="when">Wed Sept 23, evening</div>
+    <div class="what">Toc d'Inici (Opening) <span class="status confirmed">Confirmed</span></div>
+    <div class="detail">
+      <span data-lang="en">Official festival kickoff. The 2026 opening speaker (<em>pregonero</em>) is Antoni Falgueras of Celler de Gelida, a fourth-generation wine merchant from Sants.</span>
+      <span data-lang="ca">Inici oficial del festival. El pregoner del 2026 és Antoni Falgueras, del Celler de Gelida, comerciant de vins de quarta generació de Sants.</span>
+      <span data-lang="es">Inicio oficial del festival. El pregonero de 2026 es Antoni Falgueras, del Celler de Gelida, comerciante de vinos de cuarta generación de Sants.</span>
+    </div>
+    <span class="src-label" data-lang="en">Verified source:</span><span class="src-label" data-lang="ca">Font verificada:</span><span class="src-label" data-lang="es">Fuente verificada:</span>
+    <div class="src">Source: beteve.cat &amp; cope.es, dated July 22, 2026</div>
+  </div>
+
+  <div class="sched-item">
+    <div class="when">Thu Sept 24, midday</div>
+    <div class="what">Castellers — Human Towers <span class="status confirmed">Date confirmed</span></div>
+    <div class="detail">
+      <span data-lang="en">Officially listed on the 2026 program skeleton as "Jornada castellera" for Thursday midday. Exact plaza and start time not yet published — historically staged at Plaça de Sant Jaume.</span>
+      <span data-lang="ca">Apareix oficialment a l'esquema del programa del 2026 com a "Jornada castellera" per al migdia de dijous. La plaça exacta i l'hora d'inici encara no s'han publicat — històricament se celebra a la Plaça de Sant Jaume.</span>
+      <span data-lang="es">Aparece oficialmente en el esquema del programa de 2026 como "Jornada castellera" para el mediodía del jueves. La plaza exacta y la hora de inicio aún no se han publicado — históricamente se celebra en la Plaça de Sant Jaume.</span>
+    </div>
+    <span class="src-label" data-lang="en">Verified source:</span><span class="src-label" data-lang="ca">Font verificada:</span><span class="src-label" data-lang="es">Fuente verificada:</span>
+    <div class="src">Verified quote: "Jornada castellera (dijous 24 de setembre, al migdia)" — beteve.cat programa page, July 28, 2026 (verified via Evidence Integrity Guard)</div>
+  </div>
+
+  <div class="sched-item">
+    <div class="when">Thu Sept 24, afternoon</div>
+    <div class="what">Cavalcada de la Mercè (Giants &amp; Mythical Beasts Procession) <span class="status confirmed">Date confirmed</span></div>
+    <div class="detail">
+      <span data-lang="en">Officially listed for Thursday afternoon. Exact route not yet published — in 2025 it ran Plaça Catalunya → Via Laietana → Plaça Sant Jaume.</span>
+      <span data-lang="ca">Apareix oficialment per a la tarda de dijous. La ruta exacta encara no s'ha publicat — el 2025 va anar de Plaça Catalunya → Via Laietana → Plaça Sant Jaume.</span>
+      <span data-lang="es">Aparece oficialmente para la tarde del jueves. La ruta exacta aún no se ha publicado — en 2025 fue de Plaça Catalunya → Vía Layetana → Plaça Sant Jaume.</span>
+    </div>
+    <span class="src-label" data-lang="en">Verified source:</span><span class="src-label" data-lang="ca">Font verificada:</span><span class="src-label" data-lang="es">Fuente verificada:</span>
+    <div class="src">Source: beteve.cat programa page, July 28, 2026</div>
+  </div>
+
+  <div class="sched-item">
+    <div class="when">Sat Sept 26, afternoon &amp; evening</div>
+    <div class="what">Correfoc — The Fire Run <span class="status confirmed">Confirmed</span></div>
+    <div class="detail">
+      <span data-lang="en">A children's correfoc runs in the afternoon, followed by the main "Correfoc de la Mercè" in the evening (historically starts around 8:30pm). 2026 premieres a brand-new "Porta de l'Infern" (Gate of Hell) as the ceremonial entrance for the devils, dragons, and fire-beasts. Exact route not yet published — in recent years it has run along Passeig de Gràcia between Provença and Consell de Cent, but that specific street segment is <strong>not yet confirmed for 2026</strong>.</span>
+      <span data-lang="ca">A la tarda hi ha un correfoc infantil, seguit del "Correfoc de la Mercè" principal al vespre (històricament comença cap a les 20:30h). El 2026 estrena una nova "Porta de l'Infern" com a entrada cerimonial dels dimonis, dracs i bèsties de foc. La ruta exacta encara no s'ha publicat — els darrers anys ha discorregut pel Passeig de Gràcia entre Provença i Consell de Cent, però aquest tram concret <strong>encara no està confirmat per al 2026</strong>.</span>
+      <span data-lang="es">Por la tarde hay un correfuego infantil, seguido del "Correfoc de la Mercè" principal por la noche (históricamente empieza sobre las 20:30h). En 2026 se estrena una nueva "Porta de l'Infern" (Puerta del Infierno) como entrada ceremonial de los diablos, dragones y bestias de fuego. La ruta exacta aún no se ha publicado — en los últimos años ha discurrido por el Passeig de Gràcia entre Provença y Consell de Cent, pero ese tramo concreto <strong>aún no está confirmado para 2026</strong>.</span>
+    </div>
+    <span class="src-label" data-lang="en">Verified source:</span><span class="src-label" data-lang="ca">Font verificada:</span><span class="src-label" data-lang="es">Fuente verificada:</span>
+    <div class="src">Verified quote: "The 'correfoc' folkloric fire run will arrive Saturday, September 26, entering through the 'Porta de l'Infern'... which will premiere as part of La Mercè's celebration." — catalannews.com, July 22, 2026 (verified via Evidence Integrity Guard)</div>
+  </div>
+
+  <div class="sched-item">
+    <div class="when">Sun Sept 27, 10:00pm</div>
+    <div class="what">Piromusical — Closing Fireworks &amp; Music <span class="status confirmed">Confirmed — new location &amp; time</span></div>
+    <div class="detail">
+      <span data-lang="en"><strong>Location change for 2026:</strong> moves from its traditional home on Avinguda de la Reina Maria Cristina (by the Magic Fountain/Montjuïc) to <strong>Platja del Bogatell</strong> beach, due to construction at the Fira de Barcelona exhibition grounds, and will be visible from the whole Front Marítim waterfront. This is the single biggest closing-night event of the whole festival — last year's edition drew roughly 110,000 people, so arrive early.</span>
+      <span data-lang="ca"><strong>Canvi d'ubicació per al 2026:</strong> es trasllada del seu emplaçament tradicional a l'Avinguda de la Reina Maria Cristina (a prop de la Font Màgica/Montjuïc) a la platja del <strong>Bogatell</strong>, a causa de les obres al recinte de la Fira de Barcelona, i serà visible des de tot el Front Marítim. És l'esdeveniment de cloenda més gran de tot el festival — l'edició de l'any passat va aplegar unes 110.000 persones, així que arriba amb temps.</span>
+      <span data-lang="es"><strong>Cambio de ubicación para 2026:</strong> se traslada de su emplazamiento tradicional en la Avinguda de la Reina Maria Cristina (junto a la Fuente Mágica/Montjuïc) a la playa del <strong>Bogatell</strong>, debido a las obras en el recinto de la Fira de Barcelona, y será visible desde todo el Front Marítim. Es el evento de cierre más grande de todo el festival — la edición del año pasado reunió a unas 110.000 personas, así que llega con tiempo.</span>
+    </div>
+    <span class="src-label" data-lang="en">Verified source:</span><span class="src-label" data-lang="ca">Font verificada:</span><span class="src-label" data-lang="es">Fuente verificada:</span>
+    <div class="src">Verified quote: "el Piromusical, previst per la nit de diumenge 27, tornarà a ser l'acte de cloenda de la festa major, encara que aquesta vegada amb el mar i la platja del Bogatell com a nou escenari excepcional." — metropoliabierta.cat, July 14, 2026. Exact start time verified quote: "El gran espectacle de foc i música es farà el diumenge 27 a les 22 h des de la platja del Bogatell" — 3cat.cat, August 13, 2026 (both verified via Evidence Integrity Guard). Live structured-data cross-check: Barcelona City Council's own event search for Platja del Bogatell (<a href="https://www.barcelona.cat/lamerce/en/search?place=400721216" target="_blank" rel="noopener noreferrer">barcelona.cat/lamerce/en/search?place=400721216</a>) does not yet list the Piromusical itself, only the beach's concert lineup — so the exact 22:00 start is confirmed by the city's own press coverage but not yet by the searchable database entry.</div>
+  </div>
+
+  <div class="sched-item tbd">
+    <div class="when"><span data-lang="en">Not yet announced</span><span data-lang="ca">Encara no anunciat</span><span data-lang="es">Aún no anunciado</span></div>
+    <div class="what">Gegants i Nans, Sardana Dancing, Video/Light Mapping <span class="status tbd">TBD</span></div>
+    <div class="detail">
+      <span data-lang="en">These are traditionally part of every La Mercè, but the 2026 dates/times/locations are not yet published anywhere as of today. In past years, Sardana dancing has been held outside the Cathedral and light-mapping projections on the City Hall façade at Plaça de Sant Jaume — but treat that as historical pattern only, not a 2026 confirmation. We're watching the official site daily and will update this page the moment specifics drop.</span>
+      <span data-lang="ca">Tradicionalment formen part de cada edició de La Mercè, però les dates/hores/ubicacions del 2026 encara no s'han publicat enlloc a dia d'avui. Els darrers anys, el ball de sardanes s'ha fet davant de la Catedral i les projeccions de video-mapping a la façana de l'Ajuntament, a la Plaça de Sant Jaume — però considera-ho només com un patró històric, no una confirmació per al 2026. Vigilem la pàgina oficial cada dia i actualitzarem aquesta pàgina tan bon punt es publiquin els detalls.</span>
+      <span data-lang="es">Tradicionalmente forman parte de cada edición de La Mercè, pero las fechas/horas/ubicaciones de 2026 aún no se han publicado en ningún sitio a día de hoy. En años anteriores, el baile de sardanas se ha celebrado frente a la Catedral y las proyecciones de video-mapping en la fachada del Ayuntamiento, en la Plaça de Sant Jaume — pero considéralo solo un patrón histórico, no una confirmación para 2026. Vigilamos la página oficial a diario y actualizaremos esta página en cuanto se publiquen los detalles.</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <span data-lang="en">Everything above marked "Confirmed" was checked against dated, named 2026 sources and passed through a deterministic quote-verification step before being written here — nothing here is guessed or carried over silently from a prior year's schedule.</span>
+    <span data-lang="ca">Tot el que apareix marcat com a "Confirmat" s'ha comprovat contra fonts del 2026 datades i identificades, i ha passat per un pas de verificació de cites determinista abans d'escriure's aquí — res aquí és una suposició ni s'ha copiat en silenci del programa d'un any anterior.</span>
+    <span data-lang="es">Todo lo que aparece marcado como "Confirmado" se ha comprobado contra fuentes de 2026 fechadas e identificadas, y ha pasado por un paso de verificación de citas determinista antes de escribirse aquí — nada aquí es una suposición ni se ha copiado en silencio del programa de un año anterior.</span>
+  </div>
+</section>
+
+<section id="neighborhoods">
+  <div class="eyebrow"><span data-lang="en">Orientation</span><span data-lang="ca">Orientació</span><span data-lang="es">Orientación</span></div>
+  <h2><span data-lang="en">Regions of the City</span><span data-lang="ca">Regions de la Ciutat</span><span data-lang="es">Regiones de la Ciudad</span></h2>
+  <p class="lede">
+    <span data-lang="en">Barcelona is very walkable and the festival's traditional-culture core is concentrated in a tight corridor around the old town. Here's the lay of the land, starting from the hotel.</span>
+    <span data-lang="ca">Barcelona es camina molt bé i el nucli de cultura tradicional del festival es concentra en un corredor força ajustat al voltant del casc antic. Aquí tens el mapa general, començant des de l'hotel.</span>
+    <span data-lang="es">Barcelona se camina muy bien y el núcleo de cultura tradicional del festival se concentra en un corredor bastante ajustado alrededor del casco antiguo. Aquí tienes el mapa general, empezando desde el hotel.</span>
+  </p>
+
+  <div class="neigh">
+    <h4><span class="pin"></span><span data-lang="en">Eixample (you're here)</span><span data-lang="ca">Eixample (ets aquí)</span><span data-lang="es">Eixample (estás aquí)</span></h4>
+    <p>
+      <span data-lang="en">Hotel Claris sits in the Dreta de l'Eixample, right off Passeig de Gràcia — the grand 19th-century grid with chamfered street corners, home to Gaudí's Casa Batlló and Casa Milà. Wide, walkable, upscale. The Sagrada Família is about a 20-minute walk northeast; book tickets in advance, walk-ups are rare.</span>
+      <span data-lang="ca">L'Hotel Claris és a la Dreta de l'Eixample, just al costat del Passeig de Gràcia — la gran quadrícula del segle XIX amb cantonades xamfranades, on hi ha la Casa Batlló i la Casa Milà de Gaudí. Ample, còmode per caminar, elegant. La Sagrada Família és a uns 20 minuts a peu cap al nord-est; reserva entrades amb antelació, gairebé no hi ha entrades sense reserva.</span>
+      <span data-lang="es">El Hotel Claris está en la Dreta de l'Eixample, justo al lado del Passeig de Gràcia — la gran cuadrícula del siglo XIX con esquinas achaflanadas, donde están la Casa Batlló y la Casa Milà de Gaudí. Amplio, cómodo para caminar, elegante. La Sagrada Família está a unos 20 minutos a pie hacia el noreste; reserva entradas con antelación, casi no hay entradas sin reserva.</span>
+    </p>
+  </div>
+  <div class="neigh">
+    <h4><span class="pin"></span><span data-lang="en">Ciutat Vella — the Old City (La Mercè's epicenter)</span><span data-lang="ca">Ciutat Vella — la Ciutat Vella (l'epicentre de La Mercè)</span><span data-lang="es">Ciutat Vella — el Casco Antiguo (el epicentro de La Mercè)</span></h4>
+    <p>
+      <span data-lang="en">About 20-25 minutes on foot south of the hotel, or one metro stop to Jaume I. This breaks into the <strong>Barri Gòtic</strong> (medieval Gothic Quarter — the Cathedral, Plaça de Sant Jaume, dense tourist-heavy streets), <strong>El Raval</strong> (grittier, arts/nightlife, home to MACBA and one of the BAM concert stages), <strong>El Born/La Ribera</strong> (more design-conscious, less touristy, good food), and <strong>Barceloneta</strong> (the old fishing quarter and gateway to the beach — this is likely where the group's beach lunch happens). Nearly all the traditional festival events — castellers, the cavalcada, the pregó — center on Plaça de Sant Jaume and Avinguda de la Catedral. Expect real crowds here after dark during the festival.</span>
+      <span data-lang="ca">A uns 20-25 minuts a peu al sud de l'hotel, o una parada de metro fins a Jaume I. Es divideix en el <strong>Barri Gòtic</strong> (barri gòtic medieval — la Catedral, la Plaça de Sant Jaume, carrers densos i molt turístics), <strong>El Raval</strong> (més cru, art i vida nocturna, on hi ha el MACBA i un dels escenaris del BAM), <strong>El Born/La Ribera</strong> (més cuidat en disseny, menys turístic, bon menjar), i <strong>Barceloneta</strong> (l'antic barri de pescadors i la porta a la platja — probablement aquí és on el grup farà el dinar de platja). Gairebé tots els actes tradicionals del festival — castellers, la cavalcada, el pregó — se centren a la Plaça de Sant Jaume i l'Avinguda de la Catedral. Espera'hi molta gent de nit durant el festival.</span>
+      <span data-lang="es">A unos 20-25 minutos a pie al sur del hotel, o una parada de metro hasta Jaume I. Se divide en el <strong>Barri Gòtic</strong> (barrio gótico medieval — la Catedral, la Plaça de Sant Jaume, calles densas y muy turísticas), <strong>El Raval</strong> (más crudo, arte y vida nocturna, donde está el MACBA y uno de los escenarios del BAM), <strong>El Born/La Ribera</strong> (más cuidado en diseño, menos turístico, buena comida), y <strong>Barceloneta</strong> (el antiguo barrio de pescadores y la puerta a la playa — probablemente aquí es donde el grupo hará el almuerzo de playa). Casi todos los actos tradicionales del festival — castellers, la cabalgata, el pregón — se centran en la Plaça de Sant Jaume y la Avinguda de la Catedral. Espera mucha gente de noche durante el festival.</span>
+    </p>
+  </div>
+  <div class="neigh">
+    <h4><span class="pin"></span>Gràcia</h4>
+    <p>
+      <span data-lang="en">North of Eixample, about 25 minutes' walk or a quick metro ride. A former independent village with a genuinely local feel — small plazas where residents actually hang out in the evening, lower tourist density, good independent restaurants.</span>
+      <span data-lang="ca">Al nord de l'Eixample, a uns 25 minuts a peu o un breu trajecte en metro. Un antic poble independent amb un ambient veritablement local — places petites on els veïns realment surten al vespre, menys turisme, bons restaurants independents.</span>
+      <span data-lang="es">Al norte del Eixample, a unos 25 minutos a pie o un breve trayecto en metro. Un antiguo pueblo independiente con un ambiente verdaderamente local — plazas pequeñas donde los vecinos realmente salen por la noche, menos turismo, buenos restaurantes independientes.</span>
+    </p>
+  </div>
+  <div class="neigh">
+    <h4><span class="pin"></span>Poble Sec &amp; Montjuïc</h4>
+    <p>
+      <span data-lang="en">Southwest of downtown, roughly 30 minutes on foot or metro to Paral·lel. Montjuïc is the big park-covered hill — MNAC museum, Fundació Joan Miró, the 1992 Olympic stadium — and has traditionally hosted the Piromusical. Note: for 2026 the Piromusical has moved to Bogatell Beach instead (see schedule above).</span>
+      <span data-lang="ca">Al sud-oest del centre, uns 30 minuts a peu o en metro fins a Paral·lel. Montjuïc és el gran turó cobert de parcs — el museu MNAC, la Fundació Joan Miró, l'estadi olímpic de 1992 — i tradicionalment ha acollit el Piromusical. Nota: per al 2026 el Piromusical s'ha traslladat a la platja del Bogatell (vegeu el programa més amunt).</span>
+      <span data-lang="es">Al suroeste del centro, unos 30 minutos a pie o en metro hasta Paral·lel. Montjuïc es la gran colina cubierta de parques — el museo MNAC, la Fundació Joan Miró, el estadio olímpico de 1992 — y tradicionalmente ha acogido el Piromusical. Nota: para 2026 el Piromusical se ha trasladado a la playa del Bogatell (ver el programa más arriba).</span>
+    </p>
+  </div>
+  <div class="neigh">
+    <h4><span class="pin"></span>El Poblenou</h4>
+    <p>
+      <span data-lang="en">Northeast past the Olympic Village, reachable by metro in 15-20 minutes. Former industrial district, now mixing old factory buildings with tech offices and design studios. Bogatell Beach sits at its edge — that's where the 2026 Piromusical will now happen, and where Barcelona's beaches generally feel less packed than Barceloneta's.</span>
+      <span data-lang="ca">Al nord-est, més enllà de la Vila Olímpica, a uns 15-20 minuts en metro. Antic districte industrial, que ara barreja velles fàbriques amb oficines tecnològiques i estudis de disseny. La platja del Bogatell és al seu extrem — allà és on ara tindrà lloc el Piromusical del 2026, i on les platges de Barcelona solen sentir-se menys plenes que la de la Barceloneta.</span>
+      <span data-lang="es">Al noreste, más allá de la Vila Olímpica, a unos 15-20 minutos en metro. Antiguo distrito industrial, que ahora mezcla viejas fábricas con oficinas tecnológicas y estudios de diseño. La playa del Bogatell está en su extremo — ahí es donde ahora tendrá lugar el Piromusical de 2026, y donde las playas de Barcelona suelen sentirse menos llenas que la de la Barceloneta.</span>
+    </p>
+  </div>
+</section>
+
+
+<section id="itinerary">
+  <div class="eyebrow"><span data-lang="en">Day by Day</span><span data-lang="ca">Dia a Dia</span><span data-lang="es">Día a Día</span></div>
+  <h2><span data-lang="en">The Itinerary</span><span data-lang="ca">L'Itinerari</span><span data-lang="es">El Itinerario</span></h2>
+  <p class="lede">
+    <span data-lang="en">Reservations already locked in are noted below. Barcelona restaurants are small, so most bookings only fit part of the group — everyone's welcome to join whichever piece of the trip works for them.</span>
+    <span data-lang="ca">Les reserves ja confirmades s'indiquen a sota. Els restaurants de Barcelona són petits, així que la majoria de reserves només tenen cabuda per a part del grup — tothom és benvingut a la part del viatge que li vagi millor.</span>
+    <span data-lang="es">Las reservas ya confirmadas se indican a continuación. Los restaurantes de Barcelona son pequeños, así que la mayoría de las reservas solo tienen cabida para parte del grupo — todos son bienvenidos a la parte del viaje que mejor les venga.</span>
+  </p>
+
+  <div class="day">
+    <div class="day-head"><span class="dow">Wednesday</span><span class="date">Sept 23</span></div>
+    <ul>
+      <li>
+        <span data-lang="en">Fly in from Mallorca midday, check into Hotel Claris</span>
+        <span data-lang="ca">Arribada des de Mallorca a migdia, entrada a l'Hotel Claris</span>
+        <span data-lang="es">Llegada desde Mallorca a mediodía, entrada al Hotel Claris</span>
+      </li>
+      <li>
+        <span data-lang="en">Lunch near the hotel</span>
+        <span data-lang="ca">Dinar a prop de l'hotel</span>
+        <span data-lang="es">Almuerzo cerca del hotel</span>
+      </li>
+      <li>
+        <span data-lang="en">Happy hour on the hotel rooftop bar, 4:00–7:30pm (trying to reserve for 10+ people)</span>
+        <span data-lang="ca">Happy hour al bar de la terrassa de l'hotel, de 16:00 a 19:30h (intentant reservar per a 10+ persones)</span>
+        <span data-lang="es">Happy hour en el bar de la terraza del hotel, de 16:00 a 19:30h (intentando reservar para 10+ personas)</span>
+      </li>
+      <li>
+        <span data-lang="en">La Mercè's Toc d'Inici (opening) happens this evening citywide</span>
+        <span data-lang="ca">El Toc d'Inici de La Mercè té lloc aquest vespre a tota la ciutat</span>
+        <span data-lang="es">El Toc d'Inici de La Mercè tiene lugar esta noche en toda la ciudad</span>
+      </li>
+    </ul>
+    <div class="resv"><b><span data-lang="en">Dinner — booked for 10</span><span data-lang="ca">Sopar — reservat per a 10</span><span data-lang="es">Cena — reservada para 10</span></b>Masa Vins, 9:00pm · Carrer de Pallars 154, 08005 · <a href="https://masavins.com/barcelona/" target="_blank" rel="noopener noreferrer">masavins.com</a></div>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="dow">Thursday</span><span class="date">Sept 24</span></div>
+    <ul>
+      <li>
+        <span data-lang="en">Castellers (human towers) in Plaça de Sant Jaume around midday — officially confirmed for Thursday, exact plaza time still TBD</span>
+        <span data-lang="ca">Castellers (torres humanes) a la Plaça de Sant Jaume cap al migdia — confirmat oficialment per a dijous, l'hora exacta a la plaça encara per determinar</span>
+        <span data-lang="es">Castellers (torres humanas) en la Plaça de Sant Jaume hacia el mediodía — confirmado oficialmente para el jueves, la hora exacta en la plaza aún por determinar</span>
+      </li>
+      <li>
+        <span data-lang="en">Cavalcada procession in the afternoon (giants, drums, mythical beasts)</span>
+        <span data-lang="ca">Cavalcada a la tarda (gegants, tambors, bèsties mitològiques)</span>
+        <span data-lang="es">Cabalgata por la tarde (gigantes, tambores, bestias mitológicas)</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="dow">Friday</span><span class="date">Sept 25</span></div>
+    <div class="resv"><b><span data-lang="en">Dinner — booked for 6</span><span data-lang="ca">Sopar — reservat per a 6</span><span data-lang="es">Cena — reservada para 6</span></b>Gresca, 9:00pm · C/ de Provença 230, 08036 · <a href="https://www.gresca.rest/" target="_blank" rel="noopener noreferrer">gresca.rest</a></div>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="dow">Saturday</span><span class="date">Sept 26</span></div>
+    <ul>
+      <li>
+        <span data-lang="en">Beach lunch (likely Barceloneta or Bogatell)</span>
+        <span data-lang="ca">Dinar a la platja (probablement a Barceloneta o Bogatell)</span>
+        <span data-lang="es">Almuerzo en la playa (probablemente en Barceloneta o Bogatell)</span>
+      </li>
+      <li>
+        <span data-lang="en">Music / concerts around the city (BAM stages)</span>
+        <span data-lang="ca">Música / concerts per la ciutat (escenaris del BAM)</span>
+        <span data-lang="es">Música / conciertos por la ciudad (escenarios del BAM)</span>
+      </li>
+      <li>
+        <span data-lang="en">Correfoc — the fire run — happens this evening; see safety notes below</span>
+        <span data-lang="ca">El Correfoc té lloc aquest vespre; consulta les notes de seguretat més avall</span>
+        <span data-lang="es">El Correfoc tiene lugar esta noche; consulta las notas de seguridad más abajo</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="dow">Sunday</span><span class="date">Sept 27</span></div>
+    <ul>
+      <li>
+        <span data-lang="en">Piromusical (closing fireworks &amp; music) at 10:00pm — new location this year: Platja del Bogatell (arrive early, expect crowds)</span>
+        <span data-lang="ca">Piromusical (focs artificials i música de cloenda) a les 22:00h — nova ubicació enguany: Platja del Bogatell (arriba amb temps, espera'hi molta gent)</span>
+        <span data-lang="es">Piromusical (fuegos artificiales y música de cierre) a las 22:00h — nueva ubicación este año: Platja del Bogatell (llega con tiempo, espera mucha gente)</span>
+      </li>
+    </ul>
+    <div class="resv"><b>El Camarote d'en Tomàs</b>Carrer Lleida 3, 08004 · <a href="https://camarotedetomas.com/" target="_blank" rel="noopener noreferrer">camarotedetomas.com</a></div>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="dow">Monday</span><span class="date">Sept 28</span></div>
+    <ul>
+      <li>
+        <span data-lang="en">Goodbye reception — looking at a small local venue in Gràcia (Dan Green checking pricing)</span>
+        <span data-lang="ca">Trobada de comiat — buscant un local petit a Gràcia (Dan Green comprovant preus)</span>
+        <span data-lang="es">Encuentro de despedida — buscando un local pequeño en Gràcia (Dan Green comprobando precios)</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="restaurants">
+  <div class="eyebrow"><span data-lang="en">Where to Eat</span><span data-lang="ca">On Menjar</span><span data-lang="es">Dónde Comer</span></div>
+  <h2><span data-lang="en">Restaurants</span><span data-lang="ca">Restaurants</span><span data-lang="es">Restaurantes</span></h2>
+  <p class="lede">
+    <span data-lang="en">Cross-checked against <a href="https://www.eater.com/maps/best-restaurants-barcelona-spain" target="_blank" rel="noopener noreferrer">Eater's Barcelona 38 Best guide</a> and other food press — worth browsing directly for more options beyond what's below. Barcelona's best spots are small — most cap group bookings around 8-12 people — so treat any 20+ person dinner as its own mini-event rather than a normal reservation.</span>
+    <span data-lang="ca">Contrastat amb la <a href="https://www.eater.com/maps/best-restaurants-barcelona-spain" target="_blank" rel="noopener noreferrer">guia dels 38 millors de Barcelona d'Eater</a> i altra premsa gastronòmica — val la pena consultar-la directament per a més opcions a banda de les que hi ha a sota. Els millors llocs de Barcelona són petits — la majoria limiten les reserves de grup a unes 8-12 persones — així que tracta qualsevol sopar de 20+ persones com un mini-esdeveniment propi més que com una reserva normal.</span>
+    <span data-lang="es">Contrastado con la <a href="https://www.eater.com/maps/best-restaurants-barcelona-spain" target="_blank" rel="noopener noreferrer">guía de los 38 mejores de Barcelona de Eater</a> y otra prensa gastronómica — vale la pena consultarla directamente para más opciones además de las que hay abajo. Los mejores locales de Barcelona son pequeños — la mayoría limitan las reservas de grupo a unas 8-12 personas — así que trata cualquier cena de 20+ personas como un mini-evento propio más que como una reserva normal.</span>
+  </p>
+
+  <h3><span data-lang="en">Already booked</span><span data-lang="ca">Ja reservat</span><span data-lang="es">Ya reservado</span></h3>
+  <ul class="rest-list">
+    <li>
+      <div class="name">Masa Vins <span class="price">$$</span></div>
+      <div class="meta">
+        <span data-lang="en">Natural wine bar · El Poblenou · Wed Sept 23, 9pm, party of 10</span>
+        <span data-lang="ca">Bar de vins naturals · El Poblenou · dimecres 23 de setembre, 21h, grup de 10</span>
+        <span data-lang="es">Bar de vinos naturales · El Poblenou · miércoles 23 de septiembre, 21h, grupo de 10</span>
+      </div>
+      <div class="desc">
+        <span data-lang="en">~250 natural wines with a Mediterranean-meets-global menu (seabass crudo, a kimchi grilled cheese "bikini"). Retro, social, vinyl-playing energy. <strong>Groups of 5+ must confirm via Instagram DM</strong>, not the website — worth reconfirming.</span>
+        <span data-lang="ca">Uns 250 vins naturals amb una carta que barreja Mediterrani i cuina global (crudo de llobarro, un "bikini" de formatge fos amb kimchi). Ambient retro, social, amb música en vinil. <strong>Els grups de 5 o més han de confirmar per missatge d'Instagram</strong>, no per la web — val la pena reconfirmar.</span>
+        <span data-lang="es">Unos 250 vinos naturales con una carta que mezcla Mediterráneo y cocina global (crudo de lubina, un "bikini" de queso fundido con kimchi). Ambiente retro, social, con música en vinilo. <strong>Los grupos de 5 o más deben confirmar por mensaje de Instagram</strong>, no por la web — vale la pena reconfirmar.</span>
+      </div>
+    </li>
+    <li>
+      <div class="name">Mikan <span class="price">$$-$$$</span></div>
+      <div class="meta">
+        <span data-lang="en">Northeast Chinese / Japanese / Korean · Eixample · Thu Sept 24, 8pm, party of 2</span>
+        <span data-lang="ca">Cuina xinesa del nord-est / japonesa / coreana · Eixample · dijous 24 de setembre, 20h, grup de 2</span>
+        <span data-lang="es">Cocina china del noreste / japonesa / coreana · Eixample · jueves 24 de septiembre, 20h, grupo de 2</span>
+      </div>
+      <div class="desc">
+        <span data-lang="en">Chef Tan's shareable-plates concept with a serious natural wine list. Intimate, unfussy, credible cooking rather than fusion gimmick.</span>
+        <span data-lang="ca">El concepte de plats per compartir del xef Tan, amb una carta de vins naturals seriosa. Cuina íntima, sense pretensions i creïble, més que un truc de fusió.</span>
+        <span data-lang="es">El concepto de platos para compartir del chef Tan, con una carta de vinos naturales seria. Cocina íntima, sin pretensiones y creíble, más que un truco de fusión.</span>
+      </div>
+    </li>
+    <li>
+      <div class="name">Gresca <span class="price">$$-$$$</span></div>
+      <div class="meta">
+        <span data-lang="en">Catalan bistronomia · Eixample · Fri Sept 25, 9pm, party of 6</span>
+        <span data-lang="ca">Bistronomia catalana · Eixample · divendres 25 de setembre, 21h, grup de 6</span>
+        <span data-lang="es">Bistronomía catalana · Eixample · viernes 25 de septiembre, 21h, grupo de 6</span>
+      </div>
+      <div class="desc">
+        <span data-lang="en">Chef Rafa Peña's 19-year institution, credited as the birthplace of Catalan bistronomia. Open kitchen, tightly packed tables, grilled whole fish specialties.</span>
+        <span data-lang="ca">La institució de 19 anys del xef Rafa Peña, considerada el bressol de la bistronomia catalana. Cuina oberta, taules ben juntes, especialitats de peix sencer a la brasa.</span>
+        <span data-lang="es">La institución de 19 años del chef Rafa Peña, considerada la cuna de la bistronomía catalana. Cocina abierta, mesas muy juntas, especialidades de pescado entero a la brasa.</span>
+      </div>
+    </li>
+    <li>
+      <div class="name">El Camarote d'en Tomàs <span class="price">$$$$</span></div>
+      <div class="meta">
+        <span data-lang="en">Seafood marisqueria · Poble Sec/Sant Antoni · Sun Sept 27</span>
+        <span data-lang="ca">Marisqueria · Poble Sec/Sant Antoni · diumenge 27 de setembre</span>
+        <span data-lang="es">Marisquería · Poble Sec/Sant Antoni · domingo 27 de septiembre</span>
+      </div>
+      <div class="desc">
+        <span data-lang="en">A cult seafood destination — fresh-catch display case, the 30-year-running esqueixada de bacallà. Budget roughly €100/person.</span>
+        <span data-lang="ca">Un destí de culte per al marisc — vitrina de peix fresc, l'esqueixada de bacallà que porta 30 anys a la carta. Compta uns 100 €/persona.</span>
+        <span data-lang="es">Un destino de culto para el marisco — vitrina de pescado fresco, la esqueixada de bacalao que lleva 30 años en la carta. Cuenta unos 100 €/persona.</span>
+      </div>
+    </li>
+  </ul>
+
+  <h3><span data-lang="en">Under consideration</span><span data-lang="ca">En consideració</span><span data-lang="es">En consideración</span></h3>
+  <ul class="rest-list">
+    <li><div class="name">Martinez Barcelona <span class="price">$$$</span></div><div class="meta"><span data-lang="en">Seafood/paella · Montjuïc hillside terrace</span><span data-lang="ca">Marisc/paella · terrassa al vessant de Montjuïc</span><span data-lang="es">Marisco/paella · terraza en la ladera de Montjuïc</span></div><div class="desc"><span data-lang="en">Dramatic port-and-skyline views, big social lunches. Weekend sunset tables book weeks out.</span><span data-lang="ca">Vistes espectaculars al port i a l'skyline, bons dinars socials. Les taules de posta de sol el cap de setmana es reserven amb setmanes d'antelació.</span><span data-lang="es">Vistas espectaculares al puerto y al skyline, buenos almuerzos sociales. Las mesas de puesta de sol el fin de semana se reservan con semanas de antelación.</span></div></li>
+    <li><div class="name">La Mundana <span class="price">$$-$$$</span></div><div class="meta"><span data-lang="en">Creative tapas/vermuteria · Sants</span><span data-lang="ca">Tapes creatives/vermuteria · Sants</span><span data-lang="es">Tapas creativas/vermutería · Sants</span></div><div class="desc"><span data-lang="en">Catalan-Asian-Latin sharing plates in an industrial room, vermouth-forward, communal-bar layout — good for larger groups.</span><span data-lang="ca">Plats per compartir catalano-asiàtico-llatins en una sala d'estil industrial, amb el vermut com a protagonista, barra comunal — bo per a grups grans.</span><span data-lang="es">Platos para compartir catalano-asiático-latinos en una sala de estilo industrial, con el vermut como protagonista, barra comunal — bueno para grupos grandes.</span></div></li>
+    <li><div class="name">Maleducat <span class="price">$$</span></div><div class="meta"><span data-lang="en">Modern Catalan · Sant Antoni</span><span data-lang="ca">Catalana moderna · Sant Antoni</span><span data-lang="es">Catalana moderna · Sant Antoni</span></div><div class="desc"><span data-lang="en">Grandma recipes with a hipster edge — pork jowl tartare, a €49 tasting menu one reviewer called "a Catalan omakase."</span><span data-lang="ca">Receptes de l'àvia amb un toc hipster — tàrtar de papada de porc, un menú degustació de 49 € que un crític va anomenar "un omakase català".</span><span data-lang="es">Recetas de la abuela con un toque hipster — tartar de papada de cerdo, un menú degustación de 49 € que un crítico llamó "un omakase catalán".</span></div></li>
+    <li><div class="name">Casa Costa Barceloneta <span class="price">$$$</span></div><div class="meta"><span data-lang="en">Mediterranean seafood · Barceloneta</span><span data-lang="ca">Marisc mediterrani · Barceloneta</span><span data-lang="es">Marisco mediterráneo · Barceloneta</span></div><div class="desc"><span data-lang="en">Family restaurant since 1942, rebranded 2023. Whole roasted seabass, bomba croquettes.</span><span data-lang="ca">Restaurant familiar des de 1942, renovat el 2023. Llobarro sencer al forn, croquetes de bomba.</span><span data-lang="es">Restaurante familiar desde 1942, renovado en 2023. Lubina entera al horno, croquetas de bomba.</span></div></li>
+    <li><div class="name">Suculent <span class="price">$$$</span></div><div class="meta"><span data-lang="en">Creative Catalan · El Raval</span><span data-lang="ca">Catalana creativa · El Raval</span><span data-lang="es">Catalana creativa · El Raval</span></div><div class="desc"><span data-lang="en">Rustic-chic, boundary-pushing plates — steak tartare on bone marrow, confit duck croquette.</span><span data-lang="ca">Plats rústico-chic i atrevits — steak tartar sobre moll d'os, croqueta d'ànec confitat.</span><span data-lang="es">Platos rústico-chic y atrevidos — steak tartar sobre tuétano, croqueta de pato confitado.</span></div></li>
+    <li><div class="name">Ultramarinos Marín <span class="price">$$$$</span></div><div class="meta"><span data-lang="en">Refined tapas · Eixample</span><span data-lang="ca">Tapes refinades · Eixample</span><span data-lang="es">Tapas refinadas · Eixample</span></div><div class="desc"><span data-lang="en">Exceptional ingredient sourcing (sweetbreads, tuna belly), minimal-intervention cooking. Pricier end.</span><span data-lang="ca">Selecció d'ingredients excepcional (lletons, ventresca de tonyina), cuina de mínima intervenció. Gamma alta de preu.</span><span data-lang="es">Selección de ingredientes excepcional (mollejas, ventresca de atún), cocina de mínima intervención. Gama alta de precio.</span></div></li>
+    <li><div class="name">Bar La Plata <span class="price">$</span></div><div class="meta"><span data-lang="en">Classic tapas bar · Gothic Quarter</span><span data-lang="ca">Bar de tapes clàssic · Barri Gòtic</span><span data-lang="es">Bar de tapas clásico · Barrio Gótico</span></div><div class="desc"><span data-lang="en">Four items on the menu since 1945. €2.50 beer, standing room, a genuine cultural artifact.</span><span data-lang="ca">Quatre plats a la carta des de 1945. Cervesa a 2,50 €, per prendre-la dret, un veritable objecte cultural.</span><span data-lang="es">Cuatro platos en la carta desde 1945. Cerveza a 2,50 €, para tomar de pie, un verdadero objeto cultural.</span></div></li>
+    <li><div class="name">Tiberi <span class="price">$$</span></div><div class="meta"><span data-lang="en">Natural wine bar · Poble-Sec</span><span data-lang="ca">Bar de vins naturals · Poble-sec</span><span data-lang="es">Bar de vinos naturales · Poble-sec</span></div><div class="desc"><span data-lang="en">Locally sourced natural wines, veg-forward small plates. Great pre-dinner or late-night stop, not a sit-down dinner spot.</span><span data-lang="ca">Vins naturals de proximitat, platets amb protagonisme vegetal. Ideal per abans de sopar o per a la nit, no per a un sopar assegut.</span><span data-lang="es">Vinos naturales de proximidad, platitos con protagonismo vegetal. Ideal para antes de cenar o para la noche, no para una cena sentada.</span></div></li>
+    <li><div class="name">Taberna Nardi <span class="price">$$</span></div><div class="meta"><span data-lang="en">Seafood bar · El Born</span><span data-lang="ca">Bar de marisc · El Born</span><span data-lang="es">Bar de marisco · El Born</span></div><div class="desc"><span data-lang="en">Opened Jan 2026, tiny and tiled with fish-market energy, daily catch on the plancha.</span><span data-lang="ca">Obert el gener del 2026, petit i enrajolat amb un aire de mercat de peix, captura del dia a la planxa.</span><span data-lang="es">Abierto en enero de 2026, pequeño y alicatado con un aire de mercado de pescado, captura del día a la plancha.</span></div></li>
+  </ul>
+
+  <h3><span data-lang="en">Tips for feeding a big group</span><span data-lang="ca">Consells per alimentar un grup gran</span><span data-lang="es">Consejos para alimentar a un grupo grande</span></h3>
+  <div class="grid3">
+    <div class="card"><h4><span data-lang="en">Split up</span><span data-lang="ca">Dividiu-vos</span><span data-lang="es">Dividíos</span></h4><p><span data-lang="en">Book 2-3 tables of 8-10 at different (nearby) spots and regroup after — most great restaurants here simply can't seat 20+.</span><span data-lang="ca">Reserveu 2-3 taules de 8-10 en llocs diferents (propers) i retrobeu-vos després — la majoria dels bons restaurants aquí simplement no poden asseure 20+ persones.</span><span data-lang="es">Reservad 2-3 mesas de 8-10 en sitios diferentes (cercanos) y reagrupaos después — la mayoría de los buenos restaurantes aquí simplemente no pueden sentar a 20+ personas.</span></p></div>
+    <div class="card"><h4><span data-lang="en">Go communal</span><span data-lang="ca">Opteu per l'estil comunal</span><span data-lang="es">Optad por el estilo comunal</span></h4><p><span data-lang="en">Vermuterías and standing-bar spots absorb bigger groups more easily than sit-down tables.</span><span data-lang="ca">Les vermuteries i els bars per prendre dret absorbeixen grups grans més fàcilment que les taules assegudes.</span><span data-lang="es">Las vermuterías y los bares para tomar de pie absorben grupos grandes más fácilmente que las mesas sentadas.</span></p></div>
+    <div class="card"><h4><span data-lang="en">Food halls</span><span data-lang="ca">Mercats gastronòmics</span><span data-lang="es">Mercados gastronómicos</span></h4><p><span data-lang="en">Time Out Market Barcelona takes semi-private group bookings from 15-300 people across multiple food stalls — worth it for a no-stress full-group night.</span><span data-lang="ca">El Time Out Market Barcelona accepta reserves de grup semiprivades de 15 a 300 persones repartides en diverses parades — val la pena per a una nit sense estrès amb tot el grup.</span><span data-lang="es">El Time Out Market Barcelona acepta reservas de grupo semiprivadas de 15 a 300 personas repartidas en varios puestos — vale la pena para una noche sin estrés con todo el grupo.</span></p></div>
+  </div>
+</section>
+
+<section id="practical">
+  <div class="eyebrow"><span data-lang="en">Especially If This Is Your First Time Here</span><span data-lang="ca">Especialment Si És El Teu Primer Cop Aquí</span><span data-lang="es">Especialmente Si Es Tu Primera Vez Aquí</span></div>
+  <h2><span data-lang="en">Practical Guide</span><span data-lang="ca">Guia Pràctica</span><span data-lang="es">Guía Práctica</span></h2>
+  <p class="lede">
+    <span data-lang="en">A few basics that make Barcelona much easier, especially if you haven't been before.</span>
+    <span data-lang="ca">Uns quants aspectes bàsics que faciliten molt Barcelona, especialment si no hi has estat mai.</span>
+    <span data-lang="es">Unos cuantos aspectos básicos que facilitan mucho Barcelona, especialmente si no has estado nunca.</span>
+  </p>
+
+  <div class="tip">
+    <div class="icon">🚇</div>
+    <div class="body">
+      <h4><span data-lang="en">Getting around</span><span data-lang="ca">Com moure's</span><span data-lang="es">Cómo moverse</span></h4>
+      <p>
+        <span data-lang="en">The metro is fast, cheap, and covers almost everywhere you'll want to go. Buy a T-Casual or T-Usual card at any station machine rather than single tickets — it's much cheaper per ride. Google Maps transit directions work well here. Walking is genuinely the best way to see the old town; most of the festival's core activity is within a 20-30 minute walk of the hotel.</span>
+        <span data-lang="ca">El metro és ràpid, barat i cobreix gairebé tot allà on voldreu anar. Compreu una targeta T-Casual o T-Usual a qualsevol màquina de l'estació en lloc de bitllets senzills — surt molt més barat per trajecte. Les indicacions de transport de Google Maps funcionen bé aquí. Caminar és realment la millor manera de veure el casc antic; la major part de l'activitat central del festival és a 20-30 minuts a peu de l'hotel.</span>
+        <span data-lang="es">El metro es rápido, barato y cubre casi todo a donde queráis ir. Comprad una tarjeta T-Casual o T-Usual en cualquier máquina de la estación en lugar de billetes sencillos — sale mucho más barato por trayecto. Las indicaciones de transporte de Google Maps funcionan bien aquí. Caminar es realmente la mejor manera de ver el casco antiguo; la mayor parte de la actividad central del festival está a 20-30 minutos a pie del hotel.</span>
+      </p>
+    </div>
+  </div>
+  <div class="tip">
+    <div class="icon">👜</div>
+    <div class="body">
+      <h4><span data-lang="en">Pickpockets</span><span data-lang="ca">Carteristes</span><span data-lang="es">Carteristas</span></h4>
+      <p>
+        <span data-lang="en">Barcelona has a real, well-documented pickpocket problem, concentrated in the most touristy, crowded spots — Las Ramblas, the metro, and dense festival crowds are the highest-risk areas. Keep bags zipped and in front of you, phones out of back pockets, and be extra alert in tight crowds (which La Mercè absolutely will produce). It's a nuisance-crime issue, not a violent-crime one — just stay aware.</span>
+        <span data-lang="ca">Barcelona té un problema real i ben documentat de carteristes, concentrat en els llocs més turístics i concorreguts — les Rambles, el metro, i les aglomeracions denses del festival són les zones de més risc. Porteu les bosses tancades amb cremallera i davant vostre, el mòbil fora de la butxaca del darrere, i extremeu l'alerta en aglomeracions (que La Mercè sens dubte generarà). És un tema de delinqüència menor, no violenta — simplement estigueu atents.</span>
+        <span data-lang="es">Barcelona tiene un problema real y bien documentado de carteristas, concentrado en los lugares más turísticos y concurridos — las Ramblas, el metro, y las aglomeraciones densas del festival son las zonas de mayor riesgo. Llevad los bolsos cerrados con cremallera y delante de vosotros, el móvil fuera del bolsillo trasero, y extremad la alerta en aglomeraciones (que La Mercè sin duda generará). Es un tema de delincuencia menor, no violenta — simplemente estad atentos.</span>
+      </p>
+    </div>
+  </div>
+  <div class="tip">
+    <div class="icon">🔥</div>
+    <div class="body">
+      <h4><span data-lang="en">Watching the Correfoc</span><span data-lang="ca">Veient el Correfoc</span><span data-lang="es">Viendo el Correfoc</span></h4>
+      <p>
+        <span data-lang="en">The fire run involves real sparks and fireworks at close range. If you want to be near the action, wear a hat, a long-sleeve cotton shirt (no synthetics — they melt), and closed shoes; many locals wear an old jacket specifically for this. If you'd rather just watch, stand back from the barricades — you'll still feel the heat and see plenty from a safe distance.</span>
+        <span data-lang="ca">El correfoc implica espurnes i focs artificials reals a curta distància. Si voleu ser a prop de l'acció, porteu barret, una camisa de cotó de màniga llarga (res de sintètics — es fonen), i sabates tancades; molta gent d'aquí es posa una jaqueta vella específicament per a això. Si preferiu només mirar, quedeu-vos enrere de les tanques — igualment sentireu la calor i veureu molt des d'una distància segura.</span>
+        <span data-lang="es">El correfuego implica chispas y fuegos artificiales reales a corta distancia. Si queréis estar cerca de la acción, llevad gorro, una camisa de algodón de manga larga (nada de sintéticos — se derriten), y zapatos cerrados; mucha gente de aquí se pone una chaqueta vieja específicamente para esto. Si preferís solo mirar, quedaos detrás de las vallas — igualmente sentiréis el calor y veréis mucho desde una distancia segura.</span>
+      </p>
+    </div>
+  </div>
+  <div class="tip">
+    <div class="icon">🍽️</div>
+    <div class="body">
+      <h4><span data-lang="en">Eating out here is different</span><span data-lang="ca">Sortir a menjar aquí és diferent</span><span data-lang="es">Salir a comer aquí es diferente</span></h4>
+      <p>
+        <span data-lang="en">Dinner reservations are typically for 9-10pm, much later than American norms. Restaurants are small, so don't expect to walk in as a big group without a reservation. Tipping is much lighter than in the US — rounding up or 5-10% for great service is generous, not required.</span>
+        <span data-lang="ca">Les reserves per sopar solen ser a les 21-22h, molt més tard del que és habitual als EUA. Els restaurants són petits, així que no espereu entrar com a grup gran sense reserva. La propina és molt més lleugera que als EUA — arrodonir o deixar un 5-10% per un bon servei ja és generós, no obligatori.</span>
+        <span data-lang="es">Las reservas para cenar suelen ser a las 21-22h, mucho más tarde de lo habitual en EE. UU. Los restaurantes son pequeños, así que no esperéis entrar como grupo grande sin reserva. La propina es mucho más ligera que en EE. UU. — redondear o dejar un 5-10% por un buen servicio ya es generoso, no obligatorio.</span>
+      </p>
+    </div>
+  </div>
+  <div class="tip">
+    <div class="icon">💶</div>
+    <div class="body">
+      <h4><span data-lang="en">Money &amp; language</span><span data-lang="ca">Diners i idioma</span><span data-lang="es">Dinero e idioma</span></h4>
+      <p>
+        <span data-lang="en">Cards are widely accepted, but small bars and older tapas spots sometimes prefer cash. Catalan is the primary local language, but Spanish and English both work fine almost everywhere in the city center.</span>
+        <span data-lang="ca">Les targetes s'accepten àmpliament, però alguns bars petits i llocs de tapes més antics de vegades prefereixen efectiu. El català és la llengua local principal, però tant el castellà com l'anglès funcionen bé gairebé a tot arreu al centre de la ciutat.</span>
+        <span data-lang="es">Las tarjetas se aceptan ampliamente, pero algunos bares pequeños y locales de tapas más antiguos a veces prefieren efectivo. El catalán es la lengua local principal, pero tanto el castellano como el inglés funcionan bien casi en todas partes en el centro de la ciudad.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="who">
+  <div class="eyebrow"><span data-lang="en">The Crew</span><span data-lang="ca">La Colla</span><span data-lang="es">El Grupo</span></div>
+  <h2><span data-lang="en">Who's Coming</span><span data-lang="ca">Qui Vindrà</span><span data-lang="es">Quién Viene</span></h2>
+  <p class="lede">
+    <span data-lang="en">Everyone joining some part of this trip — no subgroups, just come find your people.</span>
+    <span data-lang="ca">Tothom que s'uneixi a alguna part d'aquest viatge — sense subgrups, simplement veniu a trobar la vostra gent.</span>
+    <span data-lang="es">Todos los que se unan a alguna parte de este viaje — sin subgrupos, simplemente venid a encontrar a vuestra gente.</span>
+  </p>
+  <ul class="roster">
+    <li><b>Brandi McDaniel</b><span data-lang="en">Friend from KC, lives in SF/Bay Area</span><span data-lang="ca">Amiga de KC, viu a SF/Bay Area</span><span data-lang="es">Amiga de KC, vive en SF/Bay Area</span></li>
+    <li><b>Caroline Bremmner</b><span data-lang="en">Friend from SF days, Australian, SF resident</span><span data-lang="ca">Amiga de l'època a SF, australiana, resident a SF</span><span data-lang="es">Amiga de la época en SF, australiana, residente en SF</span></li>
+    <li><b>Chris Tholstrup</b><span data-lang="en">Friend from SF days, American/British, lives in London</span><span data-lang="ca">Amic de l'època a SF, nord-americà/britànic, viu a Londres</span><span data-lang="es">Amigo de la época en SF, estadounidense/británico, vive en Londres</span></li>
+    <li><b>Jessenia Franciso</b><span data-lang="en">Friend from NYC &amp; SF days, Dominican/Colombian, NY resident</span><span data-lang="ca">Amiga de l'època a NYC i SF, dominicana/colombiana, resident a Nova York</span><span data-lang="es">Amiga de la época en NYC y SF, dominicana/colombiana, residente en Nueva York</span></li>
+    <li><b>Angeles Castro Poteet</b><span data-lang="en">Friend from TCU, Panamanian, DFW resident</span><span data-lang="ca">Amiga de la TCU, panamenya, resident a DFW</span><span data-lang="es">Amiga de la TCU, panameña, residente en DFW</span></li>
+    <li><b>Pepe Castro</b><span data-lang="en">Friend from TCU, Peruvian, DFW resident</span><span data-lang="ca">Amic de la TCU, peruà, resident a DFW</span><span data-lang="es">Amigo de la TCU, peruano, residente en DFW</span></li>
+    <li><b>Paola Castegnaro</b><span data-lang="en">College friend of Wil's (Seattle U), Costa Rican</span><span data-lang="ca">Amiga de la universitat de Wil (Seattle U), costa-riquenya</span><span data-lang="es">Amiga de la universidad de Wil (Seattle U), costarricense</span></li>
+    <li><b>Maja Murko</b><span data-lang="en">ESADE colleague, Slovenian, BCN resident</span><span data-lang="ca">Companya de l'ESADE, eslovena, resident a BCN</span><span data-lang="es">Compañera de ESADE, eslovena, residente en BCN</span></li>
+    <li><b>Franz Inselkammer</b><span data-lang="en">ESADE colleague, German, BCN resident</span><span data-lang="ca">Company de l'ESADE, alemany, resident a BCN</span><span data-lang="es">Compañero de ESADE, alemán, residente en BCN</span></li>
+    <li><b>Patri Esponda</b><span data-lang="en">Franz's partner, Peruvian, BCN resident</span><span data-lang="ca">Parella de Franz, peruana, resident a BCN</span><span data-lang="es">Pareja de Franz, peruana, residente en BCN</span></li>
+    <li><b>Rosa Morris</b><span data-lang="en">ESADE colleague, Kiwi, resident of Lyon</span><span data-lang="ca">Companya de l'ESADE, neozelandesa, resident a Lió</span><span data-lang="es">Compañera de ESADE, neozelandesa, residente en Lyon</span></li>
+    <li><b>Sarah Clarke</b><span data-lang="en">ESADE colleague, Irish, BCN resident</span><span data-lang="ca">Companya de l'ESADE, irlandesa, resident a BCN</span><span data-lang="es">Compañera de ESADE, irlandesa, residente en BCN</span></li>
+    <li><b>Katja Juvonen</b><span data-lang="en">ESADE colleague, Finnish, African resident</span><span data-lang="ca">Companya de l'ESADE, finlandesa, resident a l'Àfrica</span><span data-lang="es">Compañera de ESADE, finlandesa, residente en África</span></li>
+    <li><b>Jess Quadra Andrews</b><span data-lang="en">Friend from BCN days, American/Nicaraguan, lives in New Mexico</span><span data-lang="ca">Amiga de l'època a BCN, nord-americana/nicaragüenca, viu a Nou Mèxic</span><span data-lang="es">Amiga de la época en BCN, estadounidense/nicaragüense, vive en Nuevo México</span></li>
+    <li><b>Tyler Andrews</b><span data-lang="en">Jess's husband, American, lives in New Mexico</span><span data-lang="ca">Marit de Jess, nord-americà, viu a Nou Mèxic</span><span data-lang="es">Esposo de Jess, estadounidense, vive en Nuevo México</span></li>
+    <li><b>Sergio Aragon</b><span data-lang="en">Friend from BCN days, Mexican, lives in Berlin</span><span data-lang="ca">Amic de l'època a BCN, mexicà, viu a Berlín</span><span data-lang="es">Amigo de la época en BCN, mexicano, vive en Berlín</span></li>
+    <li><b>Steffi Kohnert</b><span data-lang="en">Sergio's wife, German, lives in Berlin</span><span data-lang="ca">Esposa de Sergio, alemanya, viu a Berlín</span><span data-lang="es">Esposa de Sergio, alemana, vive en Berlín</span></li>
+    <li><b>Susana Zaragoza</b><span data-lang="en">ESADE colleague, Catalan, BCN resident</span><span data-lang="ca">Companya de l'ESADE, catalana, resident a BCN</span><span data-lang="es">Compañera de ESADE, catalana, residente en BCN</span></li>
+    <li><b>Dan Green</b><span data-lang="en">Susana's husband, American, BCN resident</span><span data-lang="ca">Marit de Susana, nord-americà, resident a BCN</span><span data-lang="es">Esposo de Susana, estadounidense, residente en BCN</span></li>
+    <li><b>Julie Chrysler</b><span data-lang="en">ESADE colleague, BCN resident</span><span data-lang="ca">Companya de l'ESADE, resident a BCN</span><span data-lang="es">Compañera de ESADE, residente en BCN</span></li>
+    <li><b>Aurea Estelle</b><span data-lang="en">Former flatmate, Catalan, BCN resident</span><span data-lang="ca">Antiga companya de pis, catalana, resident a BCN</span><span data-lang="es">Antigua compañera de piso, catalana, residente en BCN</span></li>
+    <li><b>Jess</b><span data-lang="en">Aurea's wife, French, BCN resident</span><span data-lang="ca">Esposa d'Aurea, francesa, resident a BCN</span><span data-lang="es">Esposa de Aurea, francesa, residente en BCN</span></li>
+    <li><b>Aitor Iznu</b><span data-lang="en">Former flatmate, Basque, honorary Catalan</span><span data-lang="ca">Antic company de pis, basc, català honorari</span><span data-lang="es">Antiguo compañero de piso, vasco, catalán honorario</span></li>
+    <li><b>Nuria Ros Carrera</b><span data-lang="en">Friend from BCN days, Catalan, lives in Tarragona</span><span data-lang="ca">Amiga de l'època a BCN, catalana, viu a Tarragona</span><span data-lang="es">Amiga de la época en BCN, catalana, vive en Tarragona</span></li>
+    <li><b>Euphrates Lex Dahout</b><span data-lang="en">Friend from childhood, American, Oakland</span><span data-lang="ca">Amic de la infància, nord-americà, Oakland</span><span data-lang="es">Amigo de la infancia, estadounidense, Oakland</span></li>
+    <li><b>Luke Taylor</b><span data-lang="en">Euphrates's partner, American, SF</span><span data-lang="ca">Parella d'Euphrates, nord-americà, SF</span><span data-lang="es">Pareja de Euphrates, estadounidense, SF</span></li>
+  </ul>
+</section>
+
+</div>
+
+<section id="catalonia">
+  <div class="eyebrow"><span data-lang="en">Context, Not Politics</span><span data-lang="ca">Context, No Política</span><span data-lang="es">Contexto, No Política</span></div>
+  <h2><span data-lang="en">Catalonia &amp; the Independence Question</span><span data-lang="ca">Catalunya i la Qüestió de la Independència</span><span data-lang="es">Cataluña y la Cuestión de la Independencia</span></h2>
+  <p class="lede">
+    <span data-lang="en">During La Mercè you'll likely notice flags, murals, and language that reflect Catalonia's complicated relationship with Spain. Here's the background — no side being taken, just context so it makes sense when you see it.</span>
+    <span data-lang="ca">Durant La Mercè probablement notareu banderes, murals i llengua que reflecteixen la relació complicada de Catalunya amb Espanya. Aquí teniu el context — sense prendre partit, només perquè tingui sentit quan ho vegeu.</span>
+    <span data-lang="es">Durante La Mercè probablemente notaréis banderas, murales y lengua que reflejan la relación complicada de Cataluña con España. Aquí tenéis el contexto — sin tomar partido, solo para que tenga sentido cuando lo veáis.</span>
+  </p>
+
+  <h3><span data-lang="en">The short version</span><span data-lang="ca">La versió curta</span><span data-lang="es">La versión corta</span></h3>
+  <p>
+    <span data-lang="en">Catalonia is a region of about 7.5 million people with its own language (Catalan) and centuries of distinct identity. Franco's dictatorship (1939-1975) suppressed Catalan language and institutions; the 1978 democratic constitution restored broad autonomy while also declaring Spain's "indissoluble unity." A 2010 court ruling striking down parts of an expanded 2006 autonomy statute reignited the independence movement.</span>
+    <span data-lang="ca">Catalunya és una regió d'uns 7,5 milions de persones amb llengua pròpia (el català) i segles d'identitat diferenciada. La dictadura de Franco (1939-1975) va reprimir la llengua i les institucions catalanes; la constitució democràtica de 1978 va restaurar una àmplia autonomia alhora que declarava la "unitat indissoluble" d'Espanya. Una sentència judicial de 2010 que va anul·lar parts d'un estatut d'autonomia ampliat de 2006 va reactivar el moviment independentista.</span>
+    <span data-lang="es">Cataluña es una región de unos 7,5 millones de personas con lengua propia (el catalán) y siglos de identidad diferenciada. La dictadura de Franco (1939-1975) reprimió la lengua y las instituciones catalanas; la constitución democrática de 1978 restauró una amplia autonomía a la vez que declaraba la "unidad indisoluble" de España. Una sentencia judicial de 2010 que anuló partes de un estatuto de autonomía ampliado de 2006 reactivó el movimiento independentista.</span>
+  </p>
+  <p>
+    <span data-lang="en">On October 1, 2017, the Catalan government held an independence referendum that Spain's courts had ruled illegal; images of national police removing ballot boxes and dragging voters made global headlines. Catalonia's parliament declared independence weeks later; Madrid responded by dissolving it and imposing direct rule. Several leaders were later imprisoned (9-13 year sentences for sedition); then-president Carles Puigdemont fled to Belgium and remains there.</span>
+    <span data-lang="ca">L'1 d'octubre de 2017, el govern català va celebrar un referèndum d'independència que els tribunals espanyols havien declarat il·legal; les imatges de la policia nacional retirant urnes i arrossegant votants van ser notícia arreu del món. El Parlament de Catalunya va declarar la independència setmanes després; Madrid hi va respondre dissolent-lo i imposant el govern directe. Diversos líders van acabar empresonats (penes de 9 a 13 anys per sedició); l'aleshores president Carles Puigdemont va fugir a Bèlgica, on encara continua.</span>
+    <span data-lang="es">El 1 de octubre de 2017, el gobierno catalán celebró un referéndum de independencia que los tribunales españoles habían declarado ilegal; las imágenes de la policía nacional retirando urnas y arrastrando votantes fueron noticia en todo el mundo. El Parlamento de Cataluña declaró la independencia semanas después; Madrid respondió disolviéndolo e imponiendo el gobierno directo. Varios líderes acabaron encarcelados (penas de 9 a 13 años por sedición); el entonces presidente Carles Puigdemont huyó a Bélgica, donde sigue.</span>
+  </p>
+  <p>
+    <span data-lang="en">Since then, the temperature has cooled considerably. A 2024 amnesty law wiped out criminal liability for hundreds of people tied to the independence push; Spain's Constitutional Court upheld it in June 2025, and the EU's top court backed its compatibility with EU law in July 2026 — though Puigdemont's own case is still working through the courts and he has not returned to Spain as of this year. Public support for independence has fallen to roughly 38% (a 2025 survey by Catalonia's own polling agency), down sharply from its 2017 peak, and the region is currently led by a non-independence Socialist government.</span>
+    <span data-lang="ca">Des de llavors, els ànims s'han calmat considerablement. Una llei d'amnistia de 2024 va eliminar la responsabilitat penal de centenars de persones vinculades al procés independentista; el Tribunal Constitucional espanyol la va avalar el juny de 2025, i el tribunal més alt de la UE va confirmar la seva compatibilitat amb el dret comunitari el juliol de 2026 — tot i que el cas del propi Puigdemont encara està als tribunals i no ha tornat a Espanya a hores d'ara. El suport a la independència ha caigut a aproximadament un 38% (una enquesta de 2025 de la mateixa agència demoscòpica catalana), molt per sota del seu pic de 2017, i la regió està governada actualment per un govern socialista no independentista.</span>
+    <span data-lang="es">Desde entonces, los ánimos se han calmado considerablemente. Una ley de amnistía de 2024 eliminó la responsabilidad penal de cientos de personas vinculadas al proceso independentista; el Tribunal Constitucional español la avaló en junio de 2025, y el tribunal más alto de la UE confirmó su compatibilidad con el derecho comunitario en julio de 2026 — aunque el caso del propio Puigdemont todavía está en los tribunales y no ha vuelto a España a día de hoy. El apoyo a la independencia ha caído a aproximadamente un 38% (una encuesta de 2025 de la misma agencia demoscópica catalana), muy por debajo de su pico de 2017, y la región está gobernada actualmente por un gobierno socialista no independentista.</span>
+  </p>
+
+  <h3><span data-lang="en">What you'll actually see</span><span data-lang="ca">Què veureu realment</span><span data-lang="es">Qué veréis en realidad</span></h3>
+  <div class="flag-note">
+    <div class="fbox">
+      <svg viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="36" fill="#FCDD09"/><g fill="#DA121A"><rect y="4" width="60" height="4"/><rect y="12" width="60" height="4"/><rect y="20" width="60" height="4"/><rect y="28" width="60" height="4"/></g></svg>
+      <span><strong>Senyera</strong><br>
+        <span data-lang="en">Official Catalonia flag — flown by everyone, no political statement</span>
+        <span data-lang="ca">Bandera oficial de Catalunya — l'onegen tots, sense declaració política</span>
+        <span data-lang="es">Bandera oficial de Cataluña — la ondean todos, sin declaración política</span>
+      </span>
+    </div>
+    <div class="fbox">
+      <svg viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="36" fill="#FCDD09"/><g fill="#DA121A"><rect y="4" width="60" height="4"/><rect y="12" width="60" height="4"/><rect y="20" width="60" height="4"/><rect y="28" width="60" height="4"/></g><polygon points="0,0 26,18 0,36" fill="#0057B7"/><text x="8" y="23" font-size="13" fill="#fff" font-family="sans-serif">★</text></svg>
+      <span><strong>Estelada</strong><br>
+        <span data-lang="en">Same stripes plus a blue star — specifically a pro-independence symbol</span>
+        <span data-lang="ca">Les mateixes franges més una estrella blava — un símbol específicament independentista</span>
+        <span data-lang="es">Las mismas franjas más una estrella azul — un símbolo específicamente independentista</span>
+      </span>
+    </div>
+    <div style="align-self:center;font-size:13px;color:#3a2f26;">
+      <span data-lang="en">You'll see both hanging from balconies, often side by side. Catalan and Spanish are both official languages here — locals switch fluidly, and speaking English or Spanish anywhere won't cause offense.</span>
+      <span data-lang="ca">Veureu totes dues penjades als balcons, sovint una al costat de l'altra. El català i el castellà són tots dos llengües oficials aquí — la gent d'aquí canvia amb fluïdesa, i parlar en anglès o en castellà enlloc no ofendrà ningú.</span>
+      <span data-lang="es">Veréis las dos colgadas en los balcones, a menudo una al lado de la otra. El catalán y el castellano son ambos lenguas oficiales aquí — la gente de aquí cambia con fluidez, y hablar en inglés o en castellano en cualquier sitio no ofenderá a nadie.</span>
+    </div>
+  </div>
+  <p style="font-size:13px;color:#8a7a63;">
+    <span data-lang="en">The atmosphere in 2026 is calm — you're very unlikely to run into any protest or tension during the festival, though political murals and ribbons are common fixtures in neighborhoods like Gràcia and El Raval. Public opinion is genuinely split among Catalans themselves, not a single unified voice.</span>
+    <span data-lang="ca">L'ambient del 2026 és tranquil — és molt poc probable que us trobeu amb cap protesta o tensió durant el festival, tot i que els murals polítics i els llaços són elements habituals a barris com Gràcia i El Raval. L'opinió pública està genuïnament dividida entre els mateixos catalans, no és una veu única.</span>
+    <span data-lang="es">El ambiente de 2026 es tranquilo — es muy poco probable que os encontréis con alguna protesta o tensión durante el festival, aunque los murales políticos y los lazos son elementos habituales en barrios como Gràcia y El Raval. La opinión pública está genuinamente dividida entre los propios catalanes, no es una voz única.</span>
+  </p>
+  <p style="font-size:12px;color:#a3927a;">Sources: BBC News, "Catalonia's bid for independence explained"; The Economist explainer on the 2017 referendum; Reuters, June 2025 on the amnesty law; Politico EU &amp; Euronews, July 2026 on the CJEU ruling; Catalan News, March 2025 CEO independence-support poll. The academic source suggested for this section (academic.oup.com/book/43069) is fully paywalled and its contents could not be accessed — nothing here is drawn from it.</p>
+</section>
+
+<footer>
+  <span data-lang="en">Built for the Barcelona 2026 / La Mercè trip. Festival-schedule facts confirmed above (Piromusical relocation, Correfoc date, castellers date) were checked against dated 2026 news sources and verified with a deterministic quote-matching tool before being written here — nothing here is presented as confirmed unless it was actually found in a clearly-2026, clearly-dated source. Items marked TBD genuinely have not been announced yet; this page is being watched daily and will be updated once Barcelona City Council publishes the full 2026 program. Restaurant details cross-checked against Eater, The Infatuation, and Condé Nast Traveler coverage as of August 2026 — always worth reconfirming a reservation directly before you go.</span>
+  <span data-lang="ca">Creat per al viatge de Barcelona 2026 / La Mercè. Els fets del programa del festival confirmats més amunt (trasllat del Piromusical, data del Correfoc, data dels castellers) s'han comprovat contra fonts de notícies del 2026 datades i s'han verificat amb una eina determinista de contrast de cites abans d'escriure's aquí — res aquí es presenta com a confirmat si no s'ha trobat realment en una font clarament del 2026 i clarament datada. Els elements marcats com a TBD realment encara no s'han anunciat; aquesta pàgina es revisa diàriament i s'actualitzarà quan l'Ajuntament de Barcelona publiqui el programa complet del 2026. Els detalls dels restaurants s'han contrastat amb la cobertura d'Eater, The Infatuation i Condé Nast Traveler a data d'agost de 2026 — sempre val la pena reconfirmar una reserva directament abans d'anar-hi.</span>
+  <span data-lang="es">Creado para el viaje de Barcelona 2026 / La Mercè. Los hechos del programa del festival confirmados más arriba (traslado del Piromusical, fecha del Correfoc, fecha de los castellers) se han comprobado contra fuentes de noticias de 2026 fechadas y se han verificado con una herramienta determinista de contraste de citas antes de escribirse aquí — nada aquí se presenta como confirmado si no se ha encontrado realmente en una fuente claramente de 2026 y claramente fechada. Los elementos marcados como TBD realmente aún no se han anunciado; esta página se revisa a diario y se actualizará cuando el Ayuntamiento de Barcelona publique el programa completo de 2026. Los detalles de los restaurantes se han contrastado con la cobertura de Eater, The Infatuation y Condé Nast Traveler a fecha de agosto de 2026 — siempre vale la pena reconfirmar una reserva directamente antes de ir.</span>
+</footer>
+
+<script>
+function setLanguage(lang){
+  document.body.className = 'lang-' + lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+document.getElementById('langSwitch').addEventListener('click', function(e){
+  var btn = e.target.closest('.lang-btn');
+  if(!btn) return;
+  setLanguage(btn.dataset.lang);
+});
+setLanguage('en');
+</script>
+
+</body>
+</html>
+</content>

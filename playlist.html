@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barcelona Sounds — A Festival Playlist Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b1410;
+    --paper:#faf5ec;
+    --paper2:#f2e9d8;
+    --terra:#c1461e;
+    --terra-dark:#9c3416;
+    --gold:#d9a441;
+    --teal:#1f6b64;
+    --line:#e3d7c0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    padding:0 6%;
+  }
+  header{
+    max-width:1100px;
+    margin:0 auto;
+    padding:64px 0 32px;
+    border-bottom:3px solid var(--ink);
+  }
+  .trip-guide-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12.5px;
+    font-weight:600;
+    text-decoration:none;
+    color:var(--ink);
+    background:var(--paper2, #f2e9d8);
+    border:1.5px solid var(--line, #e3d7c0);
+    border-radius:999px;
+    padding:7px 14px;
+    margin-bottom:18px;
+  }
+  .trip-guide-link:hover{background:#fff;border-color:var(--terra);}
+  .kicker{
+    font-size:13px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--terra);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(2.6rem,6vw,4.6rem);
+    line-height:1.02;
+    margin:0 0 18px;
+    letter-spacing:-.01em;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--terra);
+  }
+  .sub{
+    font-size:17px;
+    max-width:640px;
+    line-height:1.55;
+    color:#3a2f26;
+    margin-bottom:10px;
+  }
+  .meta-row{
+    display:flex;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:24px;
+    font-size:13px;
+    color:#6b5c4a;
+  }
+  .meta-row strong{color:var(--ink);}
+
+  .controls{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 0 10px;
+    position:sticky;
+    top:0;
+    background:var(--paper);
+    z-index:5;
+  }
+  .search-wrap{
+    margin-bottom:16px;
+  }
+  #search{
+    width:100%;
+    padding:14px 18px;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:16px;
+    border:2px solid var(--ink);
+    border-radius:999px;
+    background:#fff;
+    color:var(--ink);
+    outline:none;
+  }
+  #search::placeholder{color:#9a8a75;}
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding-bottom:20px;
+  }
+  .chip{
+    padding:8px 16px;
+    border-radius:999px;
+    border:1.5px solid var(--ink);
+    background:transparent;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    cursor:pointer;
+    color:var(--ink);
+    transition:all .15s ease;
+    white-space:nowrap;
+  }
+  .chip:hover{background:var(--paper2);}
+  .chip.active{
+    background:var(--terra);
+    border-color:var(--terra);
+    color:#fff;
+  }
+  .count-line{
+    font-size:13px;
+    color:#8a7a63;
+    padding-bottom:18px;
+  }
+
+  main{
+    max-width:1100px;
+    margin:0 auto;
+    padding-bottom:100px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+    gap:18px;
+  }
+  .card{
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:22px 22px 18px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px rgba(27,20,16,.08);
+  }
+  .card.hidden{display:none;}
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:6px;
+  }
+  .artist-name{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.28rem;
+    line-height:1.2;
+  }
+  .tag{
+    flex-shrink:0;
+    font-size:10.5px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    font-weight:700;
+    padding:4px 9px;
+    border-radius:999px;
+    color:#fff;
+    white-space:nowrap;
+  }
+  .songs{
+    list-style:none;
+    margin:14px 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+  .song-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding-bottom:9px;
+    border-bottom:1px solid #f1e9d9;
+  }
+  .song-row:last-child{border-bottom:none;padding-bottom:0;}
+  .song-title{
+    font-size:14.5px;
+    color:#2b2118;
+    line-height:1.3;
+  }
+  .song-links{
+    display:flex;
+    gap:6px;
+    flex-shrink:0;
+  }
+  .listen-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    text-decoration:none;
+    font-size:13px;
+    transition:opacity .15s ease;
+  }
+  .listen-btn:hover{opacity:.75;}
+  .sp{background:#1DB954;color:#fff;}
+  .am{background:#111;color:#fff;}
+
+  .no-results{
+    text-align:center;
+    padding:80px 20px;
+    color:#9a8a75;
+    font-size:15px;
+    display:none;
+  }
+
+  footer{
+    max-width:1100px;
+    margin:0 auto;
+    padding:36px 0 60px;
+    border-top:1.5px solid var(--line);
+    font-size:12.5px;
+    color:#a3927a;
+    line-height:1.7;
+  }
+  a{color:inherit;}
+
+  .lang-switch{
+    position:fixed;
+    top:20px;
+    right:6%;
+    display:flex;
+    gap:6px;
+    background:#fff;
+    border:1.5px solid var(--ink);
+    border-radius:999px;
+    padding:4px;
+    z-index:20;
+  }
+  .lang-btn{
+    border:none;
+    background:transparent;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    padding:6px 12px;
+    border-radius:999px;
+    cursor:pointer;
+    color:var(--ink);
+    letter-spacing:.03em;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .flag-icon{
+    width:18px;
+    height:13px;
+    border-radius:2px;
+    display:block;
+    flex-shrink:0;
+    box-shadow:0 0 0 1px rgba(0,0,0,.12);
+  }
+  .lang-btn.active{
+    background:var(--ink);
+    color:#fff;
+  }
+  @media (max-width:640px){
+    .lang-switch{position:static;justify-content:flex-end;margin-bottom:12px;}
+  }
+
+  .hb-banner{
+    max-width:1100px;
+    margin:0 auto 0;
+    padding-top:8px;
+  }
+  .hb-outer{
+    width:100%;
+  }
+  .hb-outer summary.hb-teaser{
+    cursor:pointer;
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:linear-gradient(135deg,var(--terra) 0%,var(--terra-dark) 100%);
+    color:#fff;
+    padding:15px 22px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14.5px;
+    box-shadow:0 4px 16px rgba(193,70,30,.28);
+    transition:transform .15s ease;
+  }
+  .hb-outer summary.hb-teaser:hover{transform:translateY(-1px);}
+  .hb-outer summary.hb-teaser::-webkit-details-marker{display:none;}
+  .hb-teaser-icon{font-size:17px;flex-shrink:0;}
+  .hb-teaser-text{flex:1;}
+  .hb-teaser-chevron{
+    font-size:19px;
+    flex-shrink:0;
+    transition:transform .2s ease;
+    opacity:.85;
+  }
+  .hb-outer[open] .hb-teaser-chevron{transform:rotate(90deg);}
+  .hb-outer[open] summary.hb-teaser{border-radius:16px 16px 0 0;}
+  .hb-card{
+    background:linear-gradient(135deg,var(--teal) 0%,#164f4a 100%);
+    border-radius:0 0 16px 16px;
+    padding:22px 26px;
+    color:#fff;
+  }
+  .hb-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .hb-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    background:rgba(255,255,255,.14);
+    padding:6px 12px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  .hb-badge .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--gold);
+    display:inline-block;
+  }
+  .hb-headline{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(1.3rem,2.6vw,1.8rem);
+    line-height:1.25;
+    max-width:600px;
+    margin:0;
+  }
+  .hb-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--gold);
+    color:var(--ink);
+    text-decoration:none;
+    font-weight:700;
+    font-size:14.5px;
+    padding:13px 22px;
+    border-radius:999px;
+    white-space:nowrap;
+    flex-shrink:0;
+    transition:transform .15s ease;
+  }
+  .hb-cta:hover{transform:translateY(-1px);}
+
+  .hb-accordion{
+    margin-top:16px;
+    border-top:1px solid rgba(255,255,255,.2);
+    padding-top:14px;
+  }
+  .hb-accordion summary{
+    cursor:pointer;
+    list-style:none;
+    font-size:13.5px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#fff;
+    opacity:.92;
+  }
+  .hb-accordion summary::-webkit-details-marker{display:none;}
+  .hb-accordion summary::before{
+    content:'▸';
+    font-size:11px;
+    transition:transform .15s ease;
+    display:inline-block;
+  }
+  .hb-accordion[open] summary::before{
+    transform:rotate(90deg);
+  }
+  .hb-steps{
+    margin:14px 0 2px;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .hb-steps li{
+    background:rgba(255,255,255,.09);
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:13px;
+    line-height:1.5;
+    color:#eef7f5;
+  }
+  .hb-steps .step-num{
+    font-weight:700;
+    color:var(--gold);
+    margin-right:6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-switch" id="langSwitch">
+  <button class="lang-btn" data-lang="en">
+    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="36" fill="#00247d"/>
+      <g stroke="#fff" stroke-width="7"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
+      <g stroke="#cf142b" stroke-width="2.4"><line x1="0" y1="0" x2="60" y2="36"/><line x1="60" y1="0" x2="0" y2="36"/></g>
+      <rect x="24" width="12" height="36" fill="#fff"/>
+      <rect y="12" width="60" height="12" fill="#fff"/>
+      <rect x="27" width="6" height="36" fill="#cf142b"/>
+      <rect y="15" width="60" height="6" fill="#cf142b"/>
+    </svg>
+    EN
+  </button>
+  <button class="lang-btn" data-lang="ca">
+    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="36" fill="#FCDD09"/>
+      <g fill="#DA121A">
+        <rect y="4" width="60" height="4"/>
+        <rect y="12" width="60" height="4"/>
+        <rect y="20" width="60" height="4"/>
+        <rect y="28" width="60" height="4"/>
+      </g>
+      <polygon points="0,0 26,18 0,36" fill="#0057B7"/>
+      <text x="8" y="23" font-size="13" fill="#fff" font-family="sans-serif">★</text>
+    </svg>
+    CA
+  </button>
+  <button class="lang-btn" data-lang="es">
+    <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="9" y="0" fill="#AA151B"/>
+      <rect width="60" height="18" y="9" fill="#F1BF00"/>
+      <rect width="60" height="9" y="27" fill="#AA151B"/>
+    </svg>
+    ES
+  </button>
+</div>
+
+<div class="hb-banner">
+  <details class="hb-outer" id="hbOuter">
+    <summary class="hb-teaser">
+      <span class="hb-teaser-icon">⚡</span>
+      <span class="hb-teaser-text" id="hb-teaser-text"></span>
+      <span class="hb-teaser-chevron">›</span>
+    </summary>
+    <div class="hb-card">
+      <div class="hb-top">
+        <div>
+          <div class="hb-badge"><span class="dot"></span><span id="hb-badge-txt"></span></div>
+          <p class="hb-headline" id="hb-headline"></p>
+        </div>
+        <a class="hb-cta" id="hb-cta" href="https://hyperagent.com/refer/2Z2NZU74" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+      <details class="hb-accordion">
+        <summary id="hb-accordion-title"></summary>
+        <ol class="hb-steps" id="hb-steps"></ol>
+      </details>
+    </div>
+  </details>
+</div>
+
+<header>
+  <a href="index.html" class="trip-guide-link" id="tripGuideLink" target="_blank" rel="noopener noreferrer"></a>
+  <div class="kicker" id="txt-kicker"></div>
+  <h1 id="txt-h1"></h1>
+  <p class="sub" id="txt-sub"></p>
+  <div class="meta-row">
+    <div><strong id="artistCount">0</strong> <span id="txt-artists"></span></div>
+    <div><strong id="songCount">0</strong> <span id="txt-tracks"></span></div>
+    <div id="txt-updated"></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <input id="search" type="text">
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="count-line" id="countLine"></div>
+</div>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="no-results" id="noResults"></div>
+</main>
+
+<footer id="txt-footer"></footer>
+
+<script>
+const CATS = {
+  "catalan": {label:{en:"Catalan Pop & Rock", ca:"Pop i Rock Català", es:"Pop y Rock Catalán"}, color:"#c1461e"},
+  "flamenco": {label:{en:"Flamenco & Copla", ca:"Flamenc i Copla", es:"Flamenco y Copla"}, color:"#7a1f3d"},
+  "world": {label:{en:"World & Global", ca:"Món i Global", es:"Mundo y Global"}, color:"#1f6b64"},
+  "latin": {label:{en:"Latin & Tropical", ca:"Llatí i Tropical", es:"Latino y Tropical"}, color:"#b8842c"},
+  "classical": {label:{en:"Classical & Orchestral", ca:"Clàssica i Orquestral", es:"Clásica y Orquestal"}, color:"#3b3b6e"},
+  "jazz": {label:{en:"Jazz", ca:"Jazz", es:"Jazz"}, color:"#5a4632"},
+  "urban": {label:{en:"Urban & Hip-Hop", ca:"Urbà i Hip-Hop", es:"Urbano y Hip-Hop"}, color:"#8a2be2"},
+  "fado": {label:{en:"Fado & Portuguese", ca:"Fado i Portuguès", es:"Fado y Portugués"}, color:"#2b5b8a"},
+  "rock": {label:{en:"Rock & Indie", ca:"Rock i Indie", es:"Rock e Indie"}, color:"#4a4a4a"},
+  "electronic": {label:{en:"Electronic & Dance", ca:"Electrònica i Dance", es:"Electrónica y Dance"}, color:"#0e8a8a"}
+};
+
+const I18N = {
+  en: {
+    kicker: "A Field Guide · Barcelona & Beyond",
+    h1: 'Sounds of the <em>Festival</em>',
+    sub: "90 artists, three tracks each — Catalan rumba, flamenco, fado, Tuareg desert rock, chamber orchestras, and everything crossing paths in Barcelona this season. Filter by genre, then tap through to listen on Spotify or Apple Music.",
+    artists: "artists",
+    tracks: "tracks",
+    updated: "Updated August 2026",
+    searchPlaceholder: "Search an artist or song…",
+    allGenres: "All Genres",
+    countLine: n => n + " artist" + (n===1?"":"s") + " shown",
+    noResults: "No matches — try a different search or clear the filter.",
+    spTitle: "Search on Spotify",
+    amTitle: "Search on Apple Music",
+    footer: "Song picks compiled via web research of each artist's most-streamed or most representative tracks; a few institutional ensembles and DJ/live acts have no discrete studio releases and were omitted where nothing verifiable was found. Spotify/Apple Music buttons open a search for artist + track (not guaranteed direct links) — some niche or newly-billed acts may not appear on streaming yet.",
+    hbTeaser: "Built with Hyperagent — grab $100 in free AI credits and build something like this in 20 seconds",
+    hbBadge: "Built with Hyperagent",
+    hbHeadline: "Get $100 in free AI credits — a page like this took about 20 seconds of prompting to build.",
+    hbCta: "Claim your credits →",
+    tripGuideLink: "← Barcelona 2026 Trip Guide",
+    hbAccordion: "See the actual prompts that built this page",
+    hbSteps: [
+      "Give me 3 songs for each artist on this list to make a playlist to import into Soundiiz/CSV — [pasted ~90 artist names]",
+      "No need to fix the ambiguous artists. I think a public webpage that users can visit and filter by category of music, linking to Spotify or Apple Music to listen.",
+      "It needs to be available in Catalan and Spanish too, so adjust for that as well please",
+      "Make Catalan the default language the page loads in instead of English.",
+      "Include a banner that says built with Hyperagent, with the prompts in an accordion, plus my invite link."
+    ]
+  },
+  ca: {
+    kicker: "Una Guia de Camp · Barcelona i Més Enllà",
+    h1: 'Sons del <em>Festival</em>',
+    sub: "90 artistes, tres cançons cadascun — rumba catalana, flamenc, fado, rock del desert tuareg, orquestres de cambra, i tot el que es creua a Barcelona aquesta temporada. Filtra per gènere i escolta a Spotify o Apple Music.",
+    artists: "artistes",
+    tracks: "cançons",
+    updated: "Actualitzat agost 2026",
+    searchPlaceholder: "Cerca un artista o cançó…",
+    allGenres: "Tots els gèneres",
+    countLine: n => n + " artista" + (n===1?"":"s") + " mostrats",
+    noResults: "Cap resultat — prova una altra cerca o esborra el filtre.",
+    spTitle: "Cerca a Spotify",
+    amTitle: "Cerca a Apple Music",
+    footer: "Les cançons s'han recopilat mitjançant recerca web de les cançons més escoltades o representatives de cada artista; alguns conjunts institucionals i actes de DJ/directe no tenen enregistraments d'estudi discrets i s'han omès quan no s'ha trobat res verificable. Els botons de Spotify/Apple Music obren una cerca per artista + cançó (no són enllaços directes garantits) — alguns artistes minoritaris o de cartell recent poden no aparèixer encara a les plataformes.",
+    hbTeaser: "Fet amb Hyperagent — aconsegueix 100 $ en crèdits d'IA gratuïts i crea alguna cosa així en 20 segons",
+    hbBadge: "Fet amb Hyperagent",
+    hbHeadline: "Aconsegueix 100 $ en crèdits d'IA gratuïts — una pàgina com aquesta ha trigat uns 20 segons de prompts a construir-se.",
+    hbCta: "Reclama els teus crèdits →",
+    tripGuideLink: "← Guia del Viatge Barcelona 2026",
+    hbAccordion: "Mira els prompts reals que han creat aquesta pàgina",
+    hbSteps: [
+      "Give me 3 songs for each artist on this list to make a playlist to import into Soundiiz/CSV — [pasted ~90 artist names]",
+      "No need to fix the ambiguous artists. I think a public webpage that users can visit and filter by category of music, linking to Spotify or Apple Music to listen.",
+      "It needs to be available in Catalan and Spanish too, so adjust for that as well please",
+      "Make Catalan the default language the page loads in instead of English.",
+      "Include a banner that says built with Hyperagent, with the prompts in an accordion, plus my invite link."
+    ]
+  },
+  es: {
+    kicker: "Una Guía de Campo · Barcelona y Más Allá",
+    h1: 'Sonidos del <em>Festival</em>',
+    sub: "90 artistas, tres canciones cada uno — rumba catalana, flamenco, fado, rock del desierto tuareg, orquestas de cámara, y todo lo que se cruza en Barcelona esta temporada. Filtra por género y escucha en Spotify o Apple Music.",
+    artists: "artistas",
+    tracks: "canciones",
+    updated: "Actualizado agosto 2026",
+    searchPlaceholder: "Busca un artista o canción…",
+    allGenres: "Todos los géneros",
+    countLine: n => n + " artista" + (n===1?"":"s") + " mostrados",
+    noResults: "Sin resultados — prueba otra búsqueda o borra el filtro.",
+    spTitle: "Buscar en Spotify",
+    amTitle: "Buscar en Apple Music",
+    footer: "Las canciones se recopilaron mediante investigación web de los temas más escuchados o representativos de cada artista; algunos conjuntos institucionales y actos de DJ/directo no tienen grabaciones de estudio discretas y se omitieron cuando no se encontró nada verificable. Los botones de Spotify/Apple Music abren una búsqueda por artista + canción (no son enlaces directos garantizados) — algunos artistas de nicho o de cartel reciente pueden no estar aún en las plataformas.",
+    hbTeaser: "Hecho con Hyperagent — consigue 100 $ en créditos de IA gratis y crea algo así en 20 segundos",
+    hbBadge: "Hecho con Hyperagent",
+    hbHeadline: "Consigue 100 $ en créditos de IA gratis — una página como esta tardó unos 20 segundos de prompts en construirse.",
+    hbCta: "Reclama tus créditos →",
+    tripGuideLink: "← Guía del Viaje Barcelona 2026",
+    hbAccordion: "Mira los prompts reales que crearon esta página",
+    hbSteps: [
+      "Give me 3 songs for each artist on this list to make a playlist to import into Soundiiz/CSV — [pasted ~90 artist names]",
+      "No need to fix the ambiguous artists. I think a public webpage that users can visit and filter by category of music, linking to Spotify or Apple Music to listen.",
+      "It needs to be available in Catalan and Spanish too, so adjust for that as well please",
+      "Make Catalan the default language the page loads in instead of English.",
+      "Include a banner that says built with Hyperagent, with the prompts in an accordion, plus my invite link."
+    ]
+  }
+};
+
+let currentLang = "en";
+
+const DATA = [
+{a:"Admire",c:"urban",s:["LAS DEL MEDITERRÁNEO","Esa gente que HMM","BABYLON"]},
+{a:"Agost",c:"rock",s:["Speak to the Devil","The Magic Mountain","Lately everything is uncommon"]},
+{a:"Aina Machuca",c:"catalan",s:["L'estiu ets tu","Where have you been","Thelma & louise"]},
+{a:"AL-V",c:"world",s:["Los Cuervos","Non quero morrer","La Negra Sombra"]},
+{a:"Al·lèrgiques al Pol·len",c:"catalan",s:["Poeta modernet","Carinyu meu","Anestèsia total"]},
+{a:"Ana Rossi",c:"latin",s:["Pé do Meu Samba","Luna y Ventana (Canción Que Pregunta)","El Oficio del Camalotal"]},
+{a:"Angelo Manhenzane",c:"world",s:["Tus Manos Pican","Fraile Cornudo","No Le Digas a Nadie"]},
+{a:"Arar",c:"catalan",s:["Gamma Velorum","Resiliència","I dius adéu"]},
+{a:"Arp Frique & The Perpetual Singers",c:"world",s:["Father Father","Hold The Line","Save Your Soul"]},
+{a:"Asra3",c:"urban",s:["mai donis per finit","al teu costat","mami ençen la ñocla"]},
+{a:"Aterciopelados",c:"rock",s:["Bolero Falaz","Florecita Rockera","El Estuche"]},
+{a:"Azucarillo Kings",c:"rock",s:["Espeluznante","Corazón de vaso","Odisea espacial"]},
+{a:"Banda Municipal de Barcelona",c:"classical",s:["Scherzo sobre un tema popular català","Suite Empordanesa","Tirant lo Blanc"]},
+{a:"Banda Neon",c:"catalan",s:["Guapíssima","Es busca catalanet","Els passos prohibits"]},
+{a:"Banda Simfònica Roquetes de Nou Barris",c:"classical",s:["New World Symphony (4th mvt)","Amadeus favorites","Candilejas"]},
+{a:"Bia Ferreira",c:"latin",s:["Cota Não É Esmola","Só Você Me Faz Sentir","Pra Alegria Se Achegar"]},
+{a:"Bofirax",c:"rock",s:["1993","Dressed As A Shadow","Tot O Res"]},
+{a:"Brama",c:"rock",s:["La Baga d'Or","Romecs","S'enraija"]},
+{a:"Brisa Nunjo",c:"electronic",s:["Stupid Love","TINTA NEGRA","LE SOLEIL"]},
+{a:"Buhos",c:"catalan",s:["Volcans","T'he Trobat a Faltar","Barcelona S'il·lumina"]},
+{a:"Carmen Aciar",c:"latin",s:["Acto De Amor","Los Malvones de mi Casa","Siempre lo Hiciste"]},
+{a:"Carola Ortiz",c:"world",s:["Pecata Beata","La doncella guerrera","El Testament d'Amèlia"]},
+{a:"Conservatori Superior de Música Liceu",c:"classical",s:["El cant dels ocells","La Santa Espina","El Virolai"]},
+{a:"Cor del Gran Teatre del Liceu",c:"classical",s:["Otello (Verdi, live)","Aida (Verdi, live)","L'argot du bruit"]},
+{a:"Cristina Len",c:"electronic",s:["Eye-Opening","To your new babe","Castigo"]},
+{a:"Daoud",c:"jazz",s:["Ford Focus 1999","Rugby à 7","Partir un jour"]},
+{a:"De Gairó",c:"world",s:["Mal de terra","La barca xica","Oli d'oliva"]},
+{a:"Def Mama Def",c:"world",s:["Oh Maliko","Jigeen","Temporal"]},
+{a:"El Extintor + LaTorre",c:"rock",s:["Y ya nada","Flor de sal","Temporal"]},
+{a:"Els Amics de les Arts",c:"catalan",s:["Jean-Luc","Ja no ens passa","Costa Est"]},
+{a:"Els Catarres",c:"catalan",s:["Jenifer","Vull estar amb tu","En peu de guerra"]},
+{a:"ESMUC Band / RNCM Band",c:"jazz",s:["Big Time","The Steppes","Buckeyes"]},
+{a:"Fuensanta",c:"flamenco",s:["No Será Regresar","Noche","Cuándo Te Voy A Decir"]},
+{a:"Gala i Ovidio",c:"fado",s:["De maio a abril","Espadelada","Cara o mar"]},
+{a:"Giulia Valle",c:"jazz",s:["Murga de los Currelantes","Poco a Poco","Romance a Ocaña"]},
+{a:"Humana Taranja",c:"fado",s:["Fado Tropical","Zafira","Deixa Arder"]},
+{a:"I Am Roze",c:"urban",s:["Roze (forgive)","Someone Who Cares","Dollar - A COLORS SHOW"]},
+{a:"Imarhan",c:"world",s:["Tahabort","Azzaman","Ehad wa dagh"]},
+{a:"Isla Kume",c:"latin",s:["Cantarán","El Corro","Más de Mil Motivos"]},
+{a:"Islandman",c:"electronic",s:["Night Wind","Sumeru","Kara Toprak"]},
+{a:"Ivan Herzog",c:"catalan",s:["Et prometo","Des de lluny","10 de 100"]},
+{a:"Jam Nation",c:"world",s:["She Moved Through the Fair","Way Down Below Buffalo Hell"]},
+{a:"Jester",c:"rock",s:["Falling Apart","Maladaptive Daydreaming","Mr Soul Ties"]},
+{a:"Joana Queiroz",c:"fado",s:["O Barco","Memórias","Tempo sem Tempo"]},
+{a:"Jovedry",c:"catalan",s:["Miralls al terra","Cosets al braç","Cada noche"]},
+{a:"Juny del 99",c:"catalan",s:["La història de dues amants que no s'han fet un petó","Espera'm","No Vull Que La Vida Sigui Aprendre A Ser Grans"]},
+{a:"Juventude",c:"latin",s:["La Motillo","Morir en primavera","Ana mi amor"]},
+{a:"La 126",c:"urban",s:["No Va Contigo","Mis Amigas Te Odian","Te Vas"]},
+{a:"La Llorería",c:"rock",s:["Todo lo que está bien","Noviembre","La jarrita del tiempo"]},
+{a:"La Paloma",c:"flamenco",s:["Sigo aquí","Quejas célebres","Si No Me Muevo"]},
+{a:"La Pegatina",c:"catalan",s:["Y volar","Lloverá y yo veré","Mari Carmen"]},
+{a:"La Valentina",c:"urban",s:["Baddies conmigo lo superan","ASHO","Crimen y Castigo"]},
+{a:"Lecocq",c:"catalan",s:["No toquem de peus a terra","Parapents","Sous la glace"]},
+{a:"Leire Martínez",c:"catalan",s:["Mi Nombre","Tres Deseos","El Ruido"]},
+{a:"Les Testarudes",c:"catalan",s:["Vull Uns Mocasins","Terra De Secà","La Gran Xefla"]},
+{a:"Luísa Sobral",c:"fado",s:["Só Um Beijo","Gosto de Ti","Amar Pelos Dois"]},
+{a:"Maig - Entrelineas Entertainment",c:"catalan",s:["Cadaqués","Pluges d'agost","El Món és Teu"]},
+{a:"Maika Makovski",c:"rock",s:["Song of Distance","Not in Love","Love You Til I Die"]},
+{a:"Marc Vilajuana",c:"catalan",s:["Matinada","Canto el Que Puc Dir","Amansint l'Aigua"]},
+{a:"Marco de Ana",c:"flamenco",s:["Insistencia","Yo vengo de Hungría","Paraíso"]},
+{a:"Maria Jaume",c:"catalan",s:["Pura geografia","Ressaca a sa platja","Ella sempre crema"]},
+{a:"Maria Reis",c:"fado",s:["Odeio-te","Armageddon","Coisas do Passado"]},
+{a:"Marina y su Melao",c:"latin",s:["Caribe y sabrosura","Rezo al agua","He Venido"]},
+{a:"Markos amb K",c:"world",s:["Ximixanga","Festuk","Chill"]},
+{a:"María Cielos",c:"flamenco",s:["Esta vida impermanente","Lluvia lávame","Cómo te detesto"]},
+{a:"María Terremoto",c:"flamenco",s:["Manifiesto","Alma No Salgas Del Cuerpo","Luz en los balcones"]},
+{a:"MERCÈ",c:"catalan",s:["RUNNER","WHY EMMA?","Miracle"]},
+{a:"Miki Núñez",c:"catalan",s:["La Venda","Celébrate","Me Vale"]},
+{a:"Minibús Intergalàctic",c:"catalan",s:["Blau","cançó trista núm.1","desig, rebuig i jo al mig"]},
+{a:"Nacho Vegas",c:"rock",s:["La gran broma final","El don de la ternura","Actores poco memorables"]},
+{a:"Orquestra Simfònica de Barcelona i Nacional de Catalunya - OBC",c:"classical",s:["Ravel: Boléro","Bizet: Habanera (Carmen)","IV. Chanson du toréador"]},
+{a:"Orquestra Simfònica Vozes",c:"classical",s:["Haydn: Simfonia núm. 6 (1r moviment)","Mozart: Obertura de Les noces de Fígaro","Brahms: Dansa Hongaresa núm. 5"]},
+{a:"Marco Mezquida",c:"jazz",s:["Nobles y sentimentales","Pe di boi","Táctil"]},
+{a:"Paula Koops",c:"urban",s:["Línea 7","Odio que te quiero","Brindemos"]},
+{a:"Peperina",c:"rock",s:["Peperina","Cinema Verité","Salir de la melancolía"]},
+{a:"Pol Batlle",c:"flamenco",s:["Salt Mortal","La Manzana","VIDA - A COLORS SHOW"]},
+{a:"Poncelam",c:"latin",s:["Olvidarte","Rosas de Papel","Poquito a Poquito"]},
+{a:"Restinga",c:"urban",s:["un poquito más lento","tú y yo","no seas así"]},
+{a:"Revolución Guapachosa",c:"latin",s:["El Lobo","El Bacanudo","Guachafita"]},
+{a:"Sabor de Gràcia",c:"catalan",s:["Herois","Podemos Volar Juntos","La cançó amb rumba"]},
+{a:"Sandra Monfort",c:"catalan",s:["Música, ràbia i amor","Tota la nit","Solar"]},
+{a:"Sandré",c:"urban",s:["Lo Tengo Todo","Miedo la vida","Millones"]},
+{a:"Sexenni",c:"catalan",s:["De Lao","Sarrià Boy","Grup de Pop"]},
+{a:"Shanghai Chinese Orchestra",c:"classical",s:["Huteng Dance","By the Yili River","Festive Horse Race"]},
+{a:"Shanghai Conservatory of Music Jazz Ensemble",c:"jazz",s:["Fantasia on Kang Ding Love Song","East Rhythm"]},
+{a:"Shanghai Restoration Project",c:"electronic",s:["Nanking Road","Babylon of the Occident","Jade Buddha Temple"]},
+{a:"Sorvina",c:"urban",s:["Running","Don't Disturb Me","On My Way"]},
+{a:"STA",c:"world",s:["Diablos del dub","Yuyo y flor","Barri"]},
+{a:"Sunflowers",c:"rock",s:["Chameleon Kid","I Got Friends","Corpse Light"]},
+{a:"Svetlana",c:"jazz",s:["Moonlight","Moon River","In the Wee Small Hours of the Morning"]},
+{a:"Tebza Majaivane",c:"urban",s:["Finding Bakoena in a SoJo Cloud","Second Childhood"]},
+{a:"Teràpia de Shock",c:"catalan",s:["Sense Tu","Tota la nit","Escapa't Amb Mi"]},
+{a:"The Slates",c:"rock",s:["Try It Again","Watch Life Burn","Understand The Groove"]},
+{a:"TootArd",c:"world",s:["Laissez Passer","Sahra","A'sfur"]},
+{a:"TUMBAKIN",c:"latin",s:["Mi KMINO","Toda la Verdad"]},
+{a:"Tära",c:"world",s:["Mezzaluna","Diaspora","Dunya"]},
+{a:"Uzi Freyja",c:"electronic",s:["Bang Bang","Don't Disturb Me","Spicy Mami"]},
+{a:"Vicente Marín Trio",c:"flamenco",s:["Eleven Anclas","África","Saeta"]},
+{a:"Werio",c:"catalan",s:["Flores","Bomba de Humo","Wanderlust"]},
+{a:"Ypnosi",c:"electronic",s:["Dr. Funk","Del revés","La mort del porc del trap"]}
+];
+
+let activeCat = "all";
+let query = "";
+
+function spotifyURL(artist, song){
+  return "https://open.spotify.com/search/" + encodeURIComponent(artist + " " + song);
+}
+function appleURL(artist, song){
+  return "https://music.apple.com/search?term=" + encodeURIComponent(artist + " " + song);
+}
+
+function buildChips(){
+  const chips = document.getElementById('chips');
+  chips.innerHTML = '';
+  const allChip = document.createElement('button');
+  allChip.className = 'chip' + (activeCat==='all' ? ' active' : '');
+  allChip.textContent = I18N[currentLang].allGenres;
+  allChip.dataset.cat = 'all';
+  chips.appendChild(allChip);
+  Object.keys(CATS).forEach(k=>{
+    const btn = document.createElement('button');
+    btn.className = 'chip' + (activeCat===k ? ' active' : '');
+    btn.textContent = CATS[k].label[currentLang];
+    btn.dataset.cat = k;
+    chips.appendChild(btn);
+  });
+  chips.addEventListener('click', e=>{
+    const btn = e.target.closest('.chip');
+    if(!btn) return;
+    activeCat = btn.dataset.cat;
+    [...chips.children].forEach(c=>c.classList.toggle('active', c===btn));
+    render();
+  });
+}
+
+function buildGrid(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  DATA.forEach(item=>{
+    const cat = CATS[item.c];
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.cat = item.c;
+    card.dataset.search = (item.a + ' ' + item.s.join(' ')).toLowerCase();
+
+    const top = document.createElement('div');
+    top.className = 'card-top';
+    const name = document.createElement('div');
+    name.className = 'artist-name';
+    name.textContent = item.a;
+    const tag = document.createElement('div');
+    tag.className = 'tag';
+    tag.textContent = cat.label[currentLang];
+    tag.style.background = cat.color;
+    top.appendChild(name);
+    top.appendChild(tag);
+    card.appendChild(top);
+
+    const list = document.createElement('ul');
+    list.className = 'songs';
+    item.s.forEach(song=>{
+      const li = document.createElement('li');
+      li.className = 'song-row';
+      const title = document.createElement('span');
+      title.className = 'song-title';
+      title.textContent = song;
+      const links = document.createElement('span');
+      links.className = 'song-links';
+      const sp = document.createElement('a');
+      sp.className = 'listen-btn sp';
+      sp.href = spotifyURL(item.a, song);
+      sp.target = '_blank';
+      sp.rel = 'noopener noreferrer';
+      sp.title = I18N[currentLang].spTitle;
+      sp.textContent = '♫';
+      const am = document.createElement('a');
+      am.className = 'listen-btn am';
+      am.href = appleURL(item.a, song);
+      am.target = '_blank';
+      am.rel = 'noopener noreferrer';
+      am.title = I18N[currentLang].amTitle;
+      am.innerHTML = '&#9835;';
+      links.appendChild(sp);
+      links.appendChild(am);
+      li.appendChild(title);
+      li.appendChild(links);
+      list.appendChild(li);
+    });
+    card.appendChild(list);
+    grid.appendChild(card);
+  });
+}
+
+function render(){
+  const cards = document.querySelectorAll('.card');
+  let visible = 0, songTotal = 0;
+  cards.forEach(card=>{
+    const catMatch = activeCat === 'all' || card.dataset.cat === activeCat;
+    const qMatch = query === '' || card.dataset.search.includes(query);
+    const show = catMatch && qMatch;
+    card.classList.toggle('hidden', !show);
+    if(show){
+      visible++;
+      songTotal += card.querySelectorAll('.song-row').length;
+    }
+  });
+  document.getElementById('artistCount').textContent = visible;
+  document.getElementById('songCount').textContent = songTotal;
+  document.getElementById('countLine').textContent = I18N[currentLang].countLine(visible);
+  document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+}
+
+function applyStaticText(){
+  const t = I18N[currentLang];
+  document.getElementById('tripGuideLink').textContent = t.tripGuideLink;
+  document.getElementById('txt-kicker').textContent = t.kicker;
+  document.getElementById('txt-h1').innerHTML = t.h1;
+  document.getElementById('txt-sub').textContent = t.sub;
+  document.getElementById('txt-artists').textContent = t.artists;
+  document.getElementById('txt-tracks').textContent = t.tracks;
+  document.getElementById('txt-updated').textContent = t.updated;
+  document.getElementById('search').placeholder = t.searchPlaceholder;
+  document.getElementById('noResults').textContent = t.noResults;
+  document.getElementById('txt-footer').textContent = t.footer;
+  document.documentElement.lang = currentLang;
+
+  document.getElementById('hb-teaser-text').textContent = t.hbTeaser;
+  document.getElementById('hb-badge-txt').textContent = t.hbBadge;
+  document.getElementById('hb-headline').textContent = t.hbHeadline;
+  document.getElementById('hb-cta').textContent = t.hbCta;
+  document.getElementById('hb-accordion-title').textContent = t.hbAccordion;
+  const stepsEl = document.getElementById('hb-steps');
+  stepsEl.innerHTML = '';
+  t.hbSteps.forEach((step, i)=>{
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="step-num">' + (i+1) + '.</span>' + step;
+    stepsEl.appendChild(li);
+  });
+}
+
+function setLanguage(lang){
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  applyStaticText();
+  buildChips();
+  buildGrid();
+  render();
+}
+
+document.getElementById('search').addEventListener('input', e=>{
+  query = e.target.value.trim().toLowerCase();
+  render();
+});
+
+document.getElementById('langSwitch').addEventListener('click', e=>{
+  const btn = e.target.closest('.lang-btn');
+  if(!btn) return;
+  setLanguage(btn.dataset.lang);
+});
+
+setLanguage('ca');
+</script>
+</body>
+</html>

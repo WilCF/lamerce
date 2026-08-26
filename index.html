@@ -258,10 +258,10 @@
 
   /* ---- Flags note ---- */
   .flag-note{
-    display:flex;gap:16px;background:#fff;border:1.5px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:16px;background:#fff;border:1.5px solid var(--line);
     border-radius:12px;padding:16px 18px;margin:16px 0;font-size:14px;
   }
-  .flag-note .fbox{text-align:center;flex-shrink:0;}
+  .flag-note .fbox{text-align:center;flex-shrink:1;min-width:140px;max-width:220px;}
   .flag-note svg{width:44px;height:28px;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.1);display:block;margin-bottom:4px;}
   .flag-note .fbox span{font-size:10.5px;color:#8a7a63;}
 
@@ -941,7 +941,7 @@
         <span data-lang="es">Las mismas franjas más una estrella azul — un símbolo específicamente independentista</span>
       </span>
     </div>
-    <div style="align-self:center;font-size:13px;color:#3a2f26;">
+    <div style="align-self:center;font-size:13px;color:#3a2f26;min-width:180px;flex:1;">
       <span data-lang="en">You'll see both hanging from balconies, often side by side. Catalan and Spanish are both official languages here — locals switch fluidly, and speaking English or Spanish anywhere won't cause offense.</span>
       <span data-lang="ca">Veureu totes dues penjades als balcons, sovint una al costat de l'altra. El català i el castellà són tots dos llengües oficials aquí — la gent d'aquí canvia amb fluïdesa, i parlar en anglès o en castellà enlloc no ofendrà ningú.</span>
       <span data-lang="es">Veréis las dos colgadas en los balcones, a menudo una al lado de la otra. El catalán y el castellano son ambos lenguas oficiales aquí — la gente de aquí cambia con fluidez, y hablar en inglés o en castellano en cualquier sitio no ofenderá a nadie.</span>

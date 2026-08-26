@@ -30,19 +30,24 @@
   .wrap{max-width:920px;margin:0 auto;padding:0 6%;}
   a{color:var(--terra-dark);}
 
-  /* ---- Lang switcher (standalone bar, above the Hyperagent banner — like the playlist page) ---- */
-  .lang-switch-row{
-    max-width:920px;margin:0 auto;padding:16px 6% 0;
-    display:flex;justify-content:flex-end;
-  }
+  /* ---- Lang switcher (fixed, overlapping the Hyperagent banner — exact playlist-page style) ---- */
   .lang-switch{
+    position:fixed;
+    top:20px;
+    right:6%;
     display:flex;
     gap:6px;
     background:#fff;
     border:1.5px solid var(--ink);
     border-radius:999px;
     padding:4px;
-    flex-shrink:0;
+    z-index:40;
+    transition:opacity .2s ease, visibility .2s ease;
+  }
+  .lang-switch.past-header{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
   }
   .lang-btn{
     border:none;
@@ -72,8 +77,11 @@
     background:var(--ink);
     color:#fff;
   }
+  @media (max-width:640px){
+    .lang-switch{position:static;justify-content:flex-end;display:flex;margin:12px 6% 0;}
+    .lang-switch.past-header{opacity:1;visibility:visible;pointer-events:auto;}
+  }
   @media (max-width:480px){
-    .lang-switch-row{padding-top:12px;}
     .lang-btn .lang-label{display:none;}
     .lang-btn{padding:7px;}
   }
@@ -337,8 +345,7 @@
 </head>
 <body class="lang-en">
 
-<div class="lang-switch-row">
-  <div class="lang-switch" id="langSwitch">
+<div class="lang-switch" id="langSwitch">
     <button class="lang-btn active" data-lang="en">
       <svg class="flag-icon" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
         <rect width="60" height="36" fill="#00247d"/>
@@ -373,7 +380,6 @@
       </svg>
       <span class="lang-label">ES</span>
     </button>
-  </div>
 </div>
 
 <div class="hb-banner">
@@ -960,6 +966,22 @@ document.getElementById('langSwitch').addEventListener('click', function(e){
   setLanguage(btn.dataset.lang);
 });
 setLanguage('en');
+
+/* Hide the floating language switcher once the sticky nav takes over the same
+   screen band (it overlaps the Hyperagent banner by design near the top of the
+   page, like the playlist page, but must get out of the nav's way once the
+   nav pins to top:0 on scroll). Reappears if the user scrolls back up. */
+(function(){
+  var sw = document.getElementById('langSwitch');
+  var navEl = document.querySelector('nav');
+  if(!sw || !navEl) return;
+  function checkOverlap(){
+    var navRect = navEl.getBoundingClientRect();
+    sw.classList.toggle('past-header', navRect.top <= 60);
+  }
+  window.addEventListener('scroll', checkOverlap, { passive: true });
+  checkOverlap();
+})();
 
 /* Scroll-spy: highlight the current section's nav link */
 (function(){

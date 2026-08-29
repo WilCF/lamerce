@@ -107,6 +107,7 @@
     outline:none;
   }
   #search::placeholder{color:#9a8a75;}
+  .chips-wrap{position:relative;}
   .chips{
     display:flex;
     flex-wrap:wrap;
@@ -280,10 +281,11 @@
     font-size:15px;
   }
   .preview-hint{
-    font-size:12.5px;
+    font-size:13px;
+    line-height:1.5;
     color:#8a7a63;
-    padding-bottom:18px;
-    margin-top:-8px;
+    max-width:640px;
+    margin:18px 0 0;
   }
 
   .no-results{
@@ -346,6 +348,39 @@
   }
   @media (max-width:640px){
     .lang-switch{position:static;justify-content:flex-end;margin-bottom:12px;}
+
+    /* The sticky control block must not eat the phone screen. Ten wrapping
+       chips used to stack ~6 rows deep (270px); one swipeable row is ~46px. */
+    .controls{padding:14px 0 6px;}
+    .chips{
+      flex-wrap:nowrap;
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      padding-bottom:10px;
+      /* let the row bleed to the screen edge so it reads as scrollable */
+      margin:0 -6%;
+      padding-left:6%;
+      padding-right:6%;
+      scroll-padding-left:6%;
+    }
+    .chips::-webkit-scrollbar{display:none;}
+    .chip{scroll-snap-align:start;}
+    /* fade the right edge to signal there is more to swipe */
+    .chips-wrap::after{
+      content:'';
+      position:absolute;
+      top:0;
+      right:-6%;
+      width:34px;
+      height:100%;
+      pointer-events:none;
+      background:linear-gradient(to right, rgba(250,245,236,0), var(--paper));
+    }
+    .count-line{padding-bottom:10px;}
+    .search-wrap{margin-bottom:12px;}
+    #search{padding:11px 16px;}
   }
 
   .hb-banner{
@@ -560,15 +595,17 @@
     <div><strong id="songCount">0</strong> <span id="txt-tracks"></span></div>
     <div id="txt-updated"></div>
   </div>
+  <p class="preview-hint" id="previewHint"></p>
 </header>
 
 <div class="controls">
   <div class="search-wrap">
     <input id="search" type="text">
   </div>
-  <div class="chips" id="chips"></div>
+  <div class="chips-wrap">
+    <div class="chips" id="chips"></div>
+  </div>
   <div class="count-line" id="countLine"></div>
-  <div class="preview-hint" id="previewHint"></div>
 </div>
 
 <main>
@@ -606,7 +643,7 @@ const I18N = {
     noResults: "No matches — try a different search or clear the filter.",
     spTitle: "Search on Spotify",
     amTitle: "Search on Apple Music",
-    previewHint: "Tap any album cover to hear a 30-second preview. Solid black Apple buttons open the exact track; outlined ones fall back to a search.",
+    previewHint: "Tap any cover to hear 30 seconds. Black Apple buttons open the exact track \u2014 outlined ones open a search.",
     noPreview: "No preview available for this track",
     playPreview: "Play a 30-second preview",
     amSearch: "No Apple Music release found — opens a search instead",
@@ -639,7 +676,7 @@ const I18N = {
     noResults: "Cap resultat — prova una altra cerca o esborra el filtre.",
     spTitle: "Cerca a Spotify",
     amTitle: "Cerca a Apple Music",
-    previewHint: "Toca qualsevol portada per escoltar 30 segons. Els botons d'Apple negres obren la cançó exacta; els que només tenen contorn obren una cerca.",
+    previewHint: "Toca una portada per escoltar 30 segons. Els botons negres obren la cançó exacta \u2014 els de contorn, una cerca.",
     noPreview: "Aquesta cançó no té tast disponible",
     playPreview: "Escolta un tast de 30 segons",
     amSearch: "No s'ha trobat a Apple Music — obre una cerca",
@@ -672,7 +709,7 @@ const I18N = {
     noResults: "Sin resultados — prueba otra búsqueda o borra el filtro.",
     spTitle: "Buscar en Spotify",
     amTitle: "Buscar en Apple Music",
-    previewHint: "Toca cualquier portada para escuchar 30 segundos. Los botones de Apple en negro abren la canción exacta; los que solo tienen contorno abren una búsqueda.",
+    previewHint: "Toca una portada para escuchar 30 segundos. Los botones negros abren la canción exacta \u2014 los de contorno, una búsqueda.",
     noPreview: "Esta canción no tiene avance disponible",
     playPreview: "Escucha un avance de 30 segundos",
     amSearch: "No se encontró en Apple Music — abre una búsqueda",

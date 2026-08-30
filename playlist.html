@@ -648,7 +648,7 @@ const I18N = {
     playPreview: "Play a 30-second preview",
     amSearch: "No Apple Music release found — opens a search instead",
     amDirect: "Open this track in Apple Music",
-    footer: "Song picks compiled via web research of each artist's most-streamed or most representative tracks. Apple Music links, album art and 30-second previews were resolved track-by-track against Apple's catalogue in August 2026, so the black Apple buttons open the exact recording. Where no Apple Music release exists — mostly conservatory ensembles, institutional orchestras and DJ/live-only acts — the button is outlined and opens a search instead. Spotify buttons are always a filtered search, since Spotify offers no public lookup without an account key.",
+    footer: "Song picks compiled via web research of each artist's most-streamed or most representative tracks. Apple Music links, album art and 30-second previews were resolved track-by-track against Apple's catalogue in August 2026, so the black Apple buttons open the exact recording. Where no Apple Music release exists — mostly conservatory ensembles, institutional orchestras and DJ/live-only acts — the button is outlined and opens a search instead. Spotify buttons open a search for the artist and track, since Spotify offers no public lookup without an account key.",
     hbTeaser: "Built with Hyperagent — grab $100 in free AI credits and build something like this in 20 seconds",
     hbBadge: "Built with Hyperagent",
     hbHeadline: "Get $100 in free AI credits — a page like this took about 20 seconds of prompting to build.",
@@ -681,7 +681,7 @@ const I18N = {
     playPreview: "Escolta un tast de 30 segons",
     amSearch: "No s'ha trobat a Apple Music — obre una cerca",
     amDirect: "Obre aquesta cançó a Apple Music",
-    footer: "Les cançons s'han recopilat mitjançant recerca web de les més escoltades o representatives de cada artista. Els enllaços d'Apple Music, les portades i els tastos de 30 segons s'han resolt cançó per cançó contra el catàleg d'Apple l'agost del 2026, de manera que els botons negres obren l'enregistrament exacte. Quan no existeix cap edició a Apple Music — sobretot conjunts de conservatori, orquestres institucionals i actes de DJ o només en directe — el botó només té contorn i obre una cerca. Els botons de Spotify sempre són una cerca filtrada, perquè Spotify no ofereix consulta pública sense clau de compte.",
+    footer: "Les cançons s'han recopilat mitjançant recerca web de les més escoltades o representatives de cada artista. Els enllaços d'Apple Music, les portades i els tastos de 30 segons s'han resolt cançó per cançó contra el catàleg d'Apple l'agost del 2026, de manera que els botons negres obren l'enregistrament exacte. Quan no existeix cap edició a Apple Music — sobretot conjunts de conservatori, orquestres institucionals i actes de DJ o només en directe — el botó només té contorn i obre una cerca. Els botons de Spotify obren una cerca per artista i cançó, perquè Spotify no ofereix consulta pública sense clau de compte.",
     hbTeaser: "Fet amb Hyperagent — aconsegueix 100 $ en crèdits d'IA gratuïts i crea alguna cosa així en 20 segons",
     hbBadge: "Fet amb Hyperagent",
     hbHeadline: "Aconsegueix 100 $ en crèdits d'IA gratuïts — una pàgina com aquesta ha trigat uns 20 segons de prompts a construir-se.",
@@ -714,7 +714,7 @@ const I18N = {
     playPreview: "Escucha un avance de 30 segundos",
     amSearch: "No se encontró en Apple Music — abre una búsqueda",
     amDirect: "Abre esta canción en Apple Music",
-    footer: "Las canciones se recopilaron mediante investigación web de los temas más escuchados o representativos de cada artista. Los enlaces de Apple Music, las portadas y los avances de 30 segundos se resolvieron canción por canción contra el catálogo de Apple en agosto de 2026, así que los botones negros abren la grabación exacta. Cuando no existe edición en Apple Music — sobre todo conjuntos de conservatorio, orquestas institucionales y actos de DJ o solo en directo — el botón solo tiene contorno y abre una búsqueda. Los botones de Spotify son siempre una búsqueda filtrada, porque Spotify no ofrece consulta pública sin clave de cuenta.",
+    footer: "Las canciones se recopilaron mediante investigación web de los temas más escuchados o representativos de cada artista. Los enlaces de Apple Music, las portadas y los avances de 30 segundos se resolvieron canción por canción contra el catálogo de Apple en agosto de 2026, así que los botones negros abren la grabación exacta. Cuando no existe edición en Apple Music — sobre todo conjuntos de conservatorio, orquestas institucionales y actos de DJ o solo en directo — el botón solo tiene contorno y abre una búsqueda. Los botones de Spotify abren una búsqueda por artista y canción, porque Spotify no ofrece consulta pública sin clave de cuenta.",
     hbTeaser: "Hecho con Hyperagent — consigue 100 $ en créditos de IA gratis y crea algo así en 20 segundos",
     hbBadge: "Hecho con Hyperagent",
     hbHeadline: "Consigue 100 $ en créditos de IA gratis — una página como esta tardó unos 20 segundos de prompts en construirse.",
@@ -1083,8 +1083,12 @@ function amInfo(artist, song){
   return hit ? {url:hit[0], preview:hit[1], art:hit[2]} : null;
 }
 function spotifyURL(artist, song){
-  // Field-filtered search is far more precise than a bare keyword string.
-  return "https://open.spotify.com/search/" + encodeURIComponent('track:"' + song + '" artist:"' + artist + '"');
+  // Plain keyword search ONLY. Do NOT reintroduce field filters such as
+  // track:"..." artist:"..." here: the encoded colons and quotes break
+  // Spotify's web/app router, which silently bounces the user to
+  // /search/recent instead of running the query (regression, Aug 2026).
+  // A bare "artist song" string reliably returns the right track as hit #1.
+  return "https://open.spotify.com/search/" + encodeURIComponent(artist + " " + song);
 }
 function appleURL(artist, song){
   const hit = amInfo(artist, song);

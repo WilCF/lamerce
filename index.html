@@ -6,6 +6,7 @@
 <title>Barcelona 2026 — La Mercè Trip Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <style>
   :root{
     --ink:#1b1410;
@@ -292,6 +293,20 @@
   .rest-list .meta{font-size:12.5px;color:#8a7a63;margin:2px 0 6px;}
   .rest-list .desc{font-size:14px;color:#3a2f26;}
   .price{color:var(--gold);font-weight:700;letter-spacing:1px;}
+
+  /* ---- Favorite-restaurants map + list ---- */
+  #favMap{
+    width:100%;height:420px;border-radius:14px;margin:18px 0 20px;
+    border:1px solid var(--line);
+  }
+  .fav-list{list-style:none;margin:0;padding:0;columns:2;column-gap:28px;}
+  @media (max-width:640px){.fav-list{columns:1;}}
+  .fav-list li{
+    font-size:14px;margin-bottom:12px;break-inside:avoid;
+  }
+  .fav-list b{display:block;font-size:14.5px;font-family:'Fraunces',serif;font-weight:600;}
+  .fav-list .meta{color:#8a7a63;font-size:12.5px;display:block;margin:2px 0 3px;}
+  .fav-list a.gmap{font-size:12.5px;}
 
   /* ---- Neighborhood cards ---- */
   .neigh{margin-bottom:22px;}
@@ -865,6 +880,17 @@
     <div class="card"><h4><span data-lang="en">Go communal</span><span data-lang="ca">Opteu per l'estil comunal</span><span data-lang="es">Optad por el estilo comunal</span></h4><p><span data-lang="en">Vermuterías and standing-bar spots absorb bigger groups more easily than sit-down tables.</span><span data-lang="ca">Les vermuteries i els bars per prendre dret absorbeixen grups grans més fàcilment que les taules assegudes.</span><span data-lang="es">Las vermuterías y los bares para tomar de pie absorben grupos grandes más fácilmente que las mesas sentadas.</span></p></div>
     <div class="card"><h4><span data-lang="en">Food halls</span><span data-lang="ca">Mercats gastronòmics</span><span data-lang="es">Mercados gastronómicos</span></h4><p><span data-lang="en">Time Out Market Barcelona takes semi-private group bookings from 15-300 people across multiple food stalls — worth it for a no-stress full-group night.</span><span data-lang="ca">El Time Out Market Barcelona accepta reserves de grup semiprivades de 15 a 300 persones repartides en diverses parades — val la pena per a una nit sense estrès amb tot el grup.</span><span data-lang="es">El Time Out Market Barcelona acepta reservas de grupo semiprivadas de 15 a 300 personas repartidas en varios puestos — vale la pena para una noche sin estrés con todo el grupo.</span></p></div>
   </div>
+
+  <h3><span data-lang="en">LeeAnn's Favorites</span><span data-lang="ca">Els Preferits de LeeAnn</span><span data-lang="es">Los Favoritos de LeeAnn</span></h3>
+  <p class="lede">
+    <span data-lang="en">Pulled straight from LeeAnn's own Google Maps saved list — her personal favorites from past trips to Barcelona, not vetted for group size. A great source of backup options if the shortlist above is booked up, or for smaller group meals.</span>
+    <span data-lang="ca">Extret directament de la llista desada de LeeAnn a Google Maps — els seus preferits personals de viatges anteriors a Barcelona, no verificats per a mides de grup. Una bona font d'opcions alternatives si la llista de dalt està completa, o per a sopars en grups més petits.</span>
+    <span data-lang="es">Extraído directamente de la lista guardada de LeeAnn en Google Maps — sus favoritos personales de viajes anteriores a Barcelona, no verificados para tamaños de grupo. Una buena fuente de opciones alternativas si la lista de arriba está completa, o para cenas en grupos más pequeños.</span>
+  </p>
+
+  <div id="favMap"></div>
+
+  <ul class="fav-list" id="favList"></ul>
 </section>
 
 <section id="practical">
@@ -1093,6 +1119,83 @@ setLanguage('en');
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   sections.forEach(function(s){ observer.observe(s); });
+})();
+</script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+/* LeeAnn's Favorite Restaurants map + list */
+(function(){
+  var favData = [
+    {n:"Enigma", m:"Fine dining · 4.5★ (817) · €100+", lat:41.3766472, lng:2.1539904, id:"ChIJA6vUunyipBIRMtoRD_vIbII"},
+    {n:"CruiX Restaurant", m:"Restaurant · 4.6★ (2,771) · €50-90", lat:41.3781699, lng:2.1522946, id:"ChIJG8wtVnyipBIRru4JNK9EdkM"},
+    {n:"Yakumanka", m:"Peruvian · 4.5★ (4,300) · €40-80", lat:41.3903479, lng:2.1598233, id:"ChIJuzS34o2ipBIRukEv9duNDQI"},
+    {n:"Gelida", m:"Catalan · 4.6★ (5,698) · €10-20", lat:41.382959, lng:2.1569906, id:"ChIJozvmUYiipBIR6WdSHMsuhdE"},
+    {n:"Maleducat", m:"Restaurant · 4.8★ (3,904) · €50-70", lat:41.3773017, lng:2.1616571, id:"ChIJPw0-66WjpBIRPN6jXT90c54"},
+    {n:"Braseria La Selva | Sagrada Família", m:"Brasserie · 4.7★ (13,810) · €30-70", lat:41.4086958, lng:2.1735355, id:"ChIJf1OKJMWipBIRWnHMcnQA0xM"},
+    {n:"5 Hermanos", m:"Restaurant, Nou Barris · 4.6★ (2,721) · €30-60", lat:41.4441747, lng:2.1658496, id:"ChIJOfxM1Wq9pBIRBR8WNXAFbEA"},
+    {n:"L'Olivera – Can Calopa de Dalt", m:"Outside the city, Collserola hills · 4.6★ (334) · €20-30", lat:41.4293743, lng:2.0615497, id:"ChIJ0XBRnq6QpBIRW37tgoz04Xg"},
+    {n:"Masa Vins Barcelona", m:"Wine bar · 4.5★ (554) · €20-30", lat:41.3991552, lng:2.1953284, id:"ChIJf0L2Ym6jpBIRdUpYAsrpcvY"},
+    {n:"FOCO", m:"Cocktail bar · 4.8★ (522) · €10-20", lat:41.4065107, lng:2.1604695, id:"ChIJq7TeaMajpBIRIG0afQDlvek"},
+    {n:"Amateur", m:"Restaurant/wine bar · 4.6★ (386)", lat:41.3967435, lng:2.1962412, id:"ChIJGcgBbgCjpBIRlyR8TWKkYXQ"},
+    {n:"FiskeBar Barcelona", m:"Seafood/Mediterranean · 4.3★ (968)", lat:41.37555, lng:2.1819815, id:"ChIJP-TxlEqjpBIRQha3I2eJg7o"},
+    {n:"The Pirenaicas Fonda", m:"Family restaurant · 4.6★ (1,229)", lat:41.4023884, lng:2.1573166, id:"ChIJ67qmBACjpBIR5T7kUOzDu1g"},
+    {n:"Zed", m:"Mediterranean/café · 4.7★ (2,385)", lat:41.401295, lng:2.1745733, id:"ChIJwRDAUt2ipBIRBk54QLWUzTs"},
+    {n:"Brabo", m:"Restaurant, Gràcia · 4.5★ (410)", lat:41.3965262, lng:2.155631, id:"ChIJ-SIj1aOjpBIR3MytOwg9tE8"},
+    {n:"Casa Amàlia", m:"Restaurant · 4.7★ (12,053)", lat:41.3962655, lng:2.1685205, id:"ChIJcVA_AeyipBIR7AVyApkU0Ow"},
+    {n:"Vivo Tapas", m:"Tapas/cocktails · 4.8★ (26,520)", lat:41.3951663, lng:2.1596285, id:"ChIJOz6kWZGipBIR-dPpNFs_4LY"},
+    {n:"MIKAN", m:"Japanese/Chinese/Korean · 4.6★ (726)", lat:41.3923145, lng:2.1543398, id:"ChIJe7DtIUqjpBIR-YNCclnLuFQ"},
+    {n:"Gresca", m:"Restaurant · 4.0★ (2,436)", lat:41.3913159, lng:2.1571328, id:"ChIJSTemK5CipBIRNV6PIhXQ3bk"},
+    {n:"2254 Barcelona", m:"Tapas · 4.7★ (9,251)", lat:41.390125, lng:2.164202, id:"ChIJ_0MAT42ipBIRzRp5sSdFQL4"},
+    {n:"El Nacional Barcelona", m:"Food hall/restaurant · 4.4★ (41,241)", lat:41.390583, lng:2.1683914, id:"ChIJM5FFbvKipBIRdWugDh577Ao"},
+    {n:"Elsa y Fred", m:"Tapas/Mediterranean · 4.5★ (6,665)", lat:41.389793, lng:2.179749, id:"ChIJNbGKpPyipBIRWOE2AiC82hc"},
+    {n:"Suru Restaurant", m:"Restaurant · 4.7★ (495)", lat:41.3885826, lng:2.1549048, id:"ChIJ0Xon6-GjpBIR3KM1t3bqWVc"},
+    {n:"Los Tortíllez", m:"Eixample · 4.5★ (3,326)", lat:41.3886942, lng:2.1623242, id:"ChIJ7c8kQmGjpBIRy8bLaU8XLxg"},
+    {n:"La Flauta", m:"Aribau · Tapas · 4.5★ (13,300)", lat:41.3868596, lng:2.1610638, id:"ChIJbUeDbIyipBIRhf2n9OIXpig"},
+    {n:"Nardi | Taberna de mar", m:"Seafood · 4.7★ (441)", lat:41.3856534, lng:2.1795716, id:"ChIJZ8jP5tCjpBIRxTTsEU_VQaI"},
+    {n:"Arcano Restaurant Cave", m:"Mediterranean · 4.6★ (6,080)", lat:41.3849925, lng:2.1786544, id:"ChIJb-E-RfmipBIRmDyFS5ND__8"},
+    {n:"Mercado Central – Taberna Cevichera", m:"Peruvian · 4.9★ (305)", lat:41.3744509, lng:2.1618828, id:"ChIJpcivaY-jpBIRCRjQQobzrhQ"},
+    {n:"La Marea", m:"Seafood · 4.7★ (8,218)", lat:41.4016592, lng:2.2109466, id:"ChIJ7VUWZp2jpBIRbhClUwMn_7Y"},
+    {n:"Antonio's", m:"Mediterranean · 4.6★ (1,974)", lat:41.3963283, lng:2.1987963, id:"ChIJca_woxajpBIRkk5O3mmASZU"},
+    {n:"Cafè Menssana", m:"Brunch/café · 4.6★ (5,700)", lat:41.3907338, lng:2.190355, id:"ChIJl9XATxujpBIR_DUxGm51nDA"},
+    {n:"El Tribut Restaurant", m:"Mediterranean · 4.5★ (6,245)", lat:41.3888107, lng:2.2009648, id:"ChIJH413Ec-jpBIRylmPb82xhww"},
+    {n:"Casa Costa", m:"Mediterranean · 4.3★ (694)", lat:41.3764897, lng:2.1902969, id:"ChIJb4lgfmmjpBIROzW363EQ4Sw"},
+    {n:"Sartoria Panatieri", m:"Pizzeria, Gràcia · 4.5★ (4,531)", lat:41.406654, lng:2.1603187, id:"ChIJW3AI_vqjpBIRvIFzVT4t_6Q"},
+    {n:"Taverna El Glop", m:"Catalan/Spanish · 4.5★ (11,690)", lat:41.4048873, lng:2.1595444, id:"ChIJ7yj5HryipBIR17Kxb2qyrD0"},
+    {n:"Sagradas Tapes", m:"Tapas · 4.7★ (12,847)", lat:41.4085159, lng:2.1745107, id:"ChIJwyb29iujpBIRbOhvqRmk36Q"},
+    {n:"Billy Brunch", m:"Brunch · 4.8★ (13,897)", lat:41.3976991, lng:2.1693767, id:"ChIJ67TY2euipBIRhKOwdXPxwyQ"},
+    {n:"Shôko", m:"Beachfront restaurant/club · 3.7★ (10,547)", lat:41.3855209, lng:2.1969779, id:"ChIJuZCEjQijpBIRnqDzUojnMbU"},
+    {n:"Honest Greens Barceloneta", m:"Healthy/vegan-friendly · 4.5★ (3,420)", lat:41.369956, lng:2.1883255, id:"ChIJtai3XQyjpBIRbm_zNnb-vEQ"},
+    {n:"L'Ovella Negra Marina", m:"Bar &amp; grill · 4.2★ (9,824)", lat:41.3958762, lng:2.1902611, id:"ChIJl_kKXBmjpBIR0aoTGbeyf-g"},
+    {n:"Ciutat Comtal", m:"Classic Spanish/tapas · 4.4★ (23,414)", lat:41.3888547, lng:2.1670033, id:"ChIJmSmV-_KipBIR1rXbKL9Yhp4"},
+    {n:"Wok Dao", m:"Asian · 4.0★ (7,155)", lat:41.3804208, lng:2.1629087, id:"ChIJXZLAnYqipBIRxd77oudfj70"},
+    {n:"Velissima", m:"Italian · 4.3★ (2,978)", lat:41.3670929, lng:2.1890658, id:"ChIJpzCPg8-jpBIRo4mIpkTjTgA"},
+    {n:"Mercat de Santa Caterina", m:"Public food market with tapas stalls · 4.4★ (18,406)", lat:41.3863611, lng:2.1781566, id:"ChIJyTz8wvuipBIRfmWLwQzVTc8"}
+  ];
+
+  var listEl = document.getElementById('favList');
+  if(listEl){
+    favData.forEach(function(r){
+      var li = document.createElement('li');
+      var gmapUrl = 'https://www.google.com/maps/place/?q=place_id:' + r.id;
+      li.innerHTML = '<b>' + r.n + '</b><span class="meta">' + r.m + '</span><a class="gmap" href="' + gmapUrl + '" target="_blank" rel="noopener noreferrer">View on Google Maps →</a>';
+      listEl.appendChild(li);
+    });
+  }
+
+  var mapEl = document.getElementById('favMap');
+  if(mapEl && window.L){
+    var map = L.map('favMap').setView([41.393, 2.168], 13);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: 'Tiles &copy; <a href="https://www.esri.com" target="_blank" rel="noopener noreferrer">Esri</a> &mdash; Esri, HERE, Garmin, FAO, NOAA, USGS'
+    }).addTo(map);
+    favData.forEach(function(r){
+      var gmapUrl = 'https://www.google.com/maps/place/?q=place_id:' + r.id;
+      L.marker([r.lat, r.lng]).addTo(map)
+        .bindPopup('<strong>' + r.n + '</strong><br>' + r.m + '<br><a href="' + gmapUrl + '" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>');
+    });
+  }
 })();
 </script>
 
